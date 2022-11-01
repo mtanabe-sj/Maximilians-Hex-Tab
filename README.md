@@ -110,21 +110,21 @@ To build the installer, install [`Maximilian's Automation Utility`](https://gith
 This is the main component project. It builds the Tab shell extension. The Tab consists of these components.
 
 * Communication with host (explorer)
- * Propsheet extension
- * Custom host configuration
+  * Propsheet extension
+  * Custom host configuration
 * View generation
 * UI management and command invocation
- * Thread local storage
- * Keyboard accelerator
- * Keyword search
- * Print/page setup
- * Page save/copy
+  * Thread local storage
+  * Keyboard accelerator
+  * Keyword search
+  * Print/page setup
+  * Page save/copy
 * Meta object management
- * Region
- * Annotation
- * Shape
- * BOM and Unicode
- * Persistence
+  * Region
+  * Annotation
+  * Shape
+  * BOM and Unicode
+  * Persistence
 * Tag scan
  * Image support
  * Metadata parser
