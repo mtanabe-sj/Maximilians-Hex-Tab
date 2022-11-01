@@ -109,9 +109,9 @@ To build the installer, install [`Maximilian's Automation Utility`](https://gith
 
 This is the main component project. It builds the Tab shell extension. The Tab consists of these components.
 
-* Communication with host (explorer)
-  * Propsheet extension
-  * Custom host configuration
+* Communication with host (Explorer)
+  * Propsheet extension (IShellPropSheetExt)
+  * Custom host configuration (IHexDumpConfig)
 * View generation
 * UI management and command invocation
   * Thread local storage
@@ -129,14 +129,13 @@ This is the main component project. It builds the Tab shell extension. The Tab c
   * Image support
   * Metadata parser
     * Exif, XMP, ICCP, Photoshop
-  * Scan server API
-    * IHexDumpScanData
-    * IHexDumpScanSite
+  * Scan server API (IHexDumpScanServer)
 * Utility
   * Codec wrapper
   * String manipulation
   * Space allocation
   * List management
+  * Registry configuration
   * Logging
 
 ### HEXDUMPDLG Viewer Application
