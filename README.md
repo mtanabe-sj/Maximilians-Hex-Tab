@@ -150,9 +150,9 @@ This is the main component project. It builds the Tab shell extension. The Tab c
 ### ScanSrvWebP Demo Scan Server
 
 * ScanServerImpl
- * IHexDumpScanServer
- * IHexDumpScanData
- * IHexDumpScanSite
+  * IHexDumpScanServer
+  * IHexDumpScanData
+  * IHexDumpScanSite
 
 ## Contributing
 
