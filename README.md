@@ -154,6 +154,38 @@ This is the main component project. It builds the Tab shell extension. The Tab c
   * IHexDumpScanData
   * IHexDumpScanSite
 
+```C++
+DECLARE_INTERFACE_(IHexDumpScanData, IUnknown)
+{
+	...
+	STDMETHOD(GetFileSize) (THIS_ LONGLONG *SizeInBytes) PURE;
+	STDMETHOD(GetFilePointer) (THIS_ LONGLONG *Offset) PURE;
+	STDMETHOD(Read) (THIS_ LPVOID DataBuffer, ULONG *DataSizeInBytes) PURE;
+	STDMETHOD(Seek) (THIS_ LONG MoveDistance, SCANSEEK_ORIGIN SeekOrigin) PURE;
+	STDMETHOD(Search) (THIS_ LPBYTE BytesToSearch, ULONG ByteCount) PURE;
+	STDMETHOD(ParseMetaData)(THIS_ SCAN_METADATA_TYPE MetaType, LONGLONG MetaOffset, LONG MetaLength, SHORT ParentIndex, SHORT *TagIndex) PURE;
+};
+
+DECLARE_INTERFACE_(IHexDumpScanSite, IUnknown)
+{
+	...
+	STDMETHOD(GetVersion)(THIS_ ULONG *SiteVersion) PURE;
+	STDMETHOD(GetState) (THIS_ SCANSITE_STATE *SiteState) PURE;
+	STDMETHOD(GetFileName)(THIS_ BSTR *FileName) PURE;
+	STDMETHOD(TagData)(THIS_ USHORT Flags, LONGLONG TagOffset, LONG TagLength, BSTR TagNote, SHORT ParentIndex, SHORT *TagIndex) PURE;
+	STDMETHOD(Annotate)(THIS_ LONG TagIndex, VARIANT *SourceData) PURE;
+};
+
+DECLARE_INTERFACE_(IHexDumpScanServer, IUnknown)
+{
+	...
+	STDMETHOD(Init) (THIS_ IHexDumpScanSite *ScanSite, IHexDumpScanData *SourceData) PURE;
+	STDMETHOD(Term) (THIS) PURE;
+	STDMETHOD(Scan) (THIS) PURE;
+	STDMETHOD(GetErrorMessage) (THIS_ BSTR *Message) PURE;
+};
+```
+
 ## Contributing
 
 Bug reports and enhancement requests are welcome.
