@@ -9,30 +9,29 @@ Let's give you a functional overview first. Hopefull you develop a good idea on 
 
 ### Summary
 
-Hex view generator
-  Small screen format
-  Large screen format
-  Keyword search
-  ASCII to hex digits
-Meta objects
-  Regions and annotations as tags
-  Image annotation
-  Large-text annotation
-  Free-flowing shapes
-    Translation and rotation
-    Custom cursors
-  Meta data persistence
-Tag scan
-  built-in support
-    Thumbnail
-    Metadata parser
-      Exif, XMP, ICCP, Photoshop
-    BOM, Unicode, UTF-8
-  External scan server
-Utility
-  Page setup and print
-  Save as bitmap image
-  Copy to clipboard
+* Hex view generator
+o Small screen format
+o Large screen format
+o Keyword search
+o ASCII to hex digits
+* Meta objects
+o Regions and annotations as tags
+o Image annotation
+o Large-text annotation
+o Free-flowing shapes
+  o Translation and rotation
+  o Custom cursors
+o Meta data persistence
+* Tag scan
+o built-in support
+  o Thumbnail
+  o Metadata parser: Exif, XMP, ICCP, Photoshop
+  o BOM, Unicode, UTF-8
+o External scan server
+* Utility
+o Page setup and print
+o Save as bitmap image
+o Copy to clipboard
 
 ### Windows Explorer Integration
 
@@ -43,6 +42,8 @@ The Tab is an add-on for Windows Explorer, which makes its hex-dump service easi
 The Tab shows the file offset in the left-hand column, the hex digits of source bytes in the middle column, and the source bytes as ASCII characters in the right-hand column. If the file has text encoded in Unicode or UTF-8, run a scan. The Tab shows the text as Unicode characters in the right-hand column, instead.
 
 Is the default 8-byte-per-row output format too small? Use menu command `Open in New Window` to open the file in a separate window with a larger display and show the hex output in a 16-byte-per-row format. The larger window comes with a tool bar of command buttons for your convenience, too.
+
+![alt Tab view - wide display](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/standalone%20tab.png)
 
 ### Colors, Tags and Shapes to Mark Data Blocks
 
