@@ -44,9 +44,13 @@ Is the default 8-byte-per-row output format too small? Use menu command `Open in
 
 ![alt Tab view - wide display](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/standalone%20tab.png)
 
+![alt Find data](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/find%20data.png)
+
 ### Colors, Tags and Shapes to Mark Data Blocks
 
 Suppose you find interesting bytes in the hex output, and want to highlight. But how? Easy. Click on the starting byte, and drag to extend the selection of byte range. The bytes are automatically filled with color. Next, add a note of description. Need a picture with the note? No problem. Copy the source image onto the clipboard. Then, just paste it into the note. Want to circle the range? Or, underline it with a wavy line? With the Tab, you can do them, too. They are on the Shape menu. Is the circle (more like an ellipse) too small? Stretch it to cover all of the interesting bytes. If you need to, you can rotate the shape, too. Choose Apply or OK to keep the tags and shapes you added. Next time the file in opened for properties, they are automatically pulled up and shown.
+
+![alt Add tag](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/add%20tag.png)
 
 Note that colored regions, notes, and shapes are referred to as `meta` objects in the Tab project.
 
