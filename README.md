@@ -154,7 +154,7 @@ struct DUMPSHAPEINFO { BYTE Shape; BYTE Flags; USHORT StrokeThickness; ...; COLO
 
 See _persistMetafile::save_ on how meta objects are serialized. This takes place when the OK or Apply button is selected. Loading or de-serialization of persisted meta objects happens automatically next time the Tab is opened for the same file. See the _persistMetafile::load_ method. A meta file that stores serialized meta objects is located in a subfolder of the per-user folder of _%LocalAppData%_. How does the load method know which meta file to read? The _save_ method generates a unique ID naming the meta file after it, and writes a named setting with the dumped file as the name and the meta file ID as the value in a per-user key of the system registry. The _load_ method makes a lookup for the dumped file in the registry and retrieves the meta file ID. Based on the file ID, it locates the meta file and de-serializes and loads the meta objects. The registry key that maintains the meta file mapping is HKEY_CURRENT_USER\SOFTWARE\mtanabe\HexDumpTab\MetaFiles. File mapping entries in the key look like this.
 
-![alt Metafiles registry key](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/Metafiles%20registry%20key.png)
+![alt Metafiles registry key](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/metafiles%20registry%20key.png)
 
 
 
