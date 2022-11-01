@@ -144,6 +144,17 @@ This is the main component project. It builds the Tab shell extension. The Tab c
   * Registry configuration (_functions Registry*_)
   * Logging (_EventLog_)
 
+Central to the Tab as an Explorer add-on is class PropsheetExtImpl. It creates and manages a Win32 property page bound to a property sheet managed by Explorer. The class implements IShellPropSheetExt which enables communication with the host app. PropsheetExtImpl hosts a child window of BinhexDumpWnd to manage view generation and interactions with the user. BinhexDumpWnd subclasses BinhexMetaView which manages the hex view and meta objects. Meta objects are tags (colored regions and annotations) and free-flowing graphical shapes that users can attach to parts of the hex view. Meta objects are serialized to and de-serialized from arrays of fixed-length structures forming a so-called meta file. Class persistMetafile is responsible for the operations. These are the meta object structures.
+
+```C++
+struct DUMPREGIONINFO { LARGE_INTEGER DataOffset; ULONG DataLength; ...; UINT AnnotCtrlId; };
+struct DUMPANNOTATIONINFO { WCHAR Text[256]; WCHAR TextEnd; BYTE Flags; ...; HBITMAP ThumbnailHandle; };
+struct DUMPSHAPEINFO { BYTE Shape; BYTE Flags; USHORT StrokeThickness; ...; COLORREF InteriorColor; };
+```
+
+Persistence takes place when the OK or Apply button is selected. 
+
+
 ### HEXDUMPDLG Viewer Application
 
 * Command line parser
