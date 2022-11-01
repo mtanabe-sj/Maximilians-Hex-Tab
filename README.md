@@ -9,10 +9,9 @@ Let's give you a functional overview first. Hopefull you develop a good idea on 
 ### At a Glance
 
 * Hex view generator
-  * Small screen format
-  * Large screen format
+  * Dump formats (8, 16, and 32 bytes per row)
   * Keyword search
-  * ASCII to hex digits
+  * ASCII column to hex column association
 * Meta objects
   * Regions and annotations as tags
   * Image annotation
@@ -20,7 +19,8 @@ Let's give you a functional overview first. Hopefull you develop a good idea on 
   * Free-flowing shapes
     * Translation and rotation
     * Custom cursors
-  * Meta data persistence
+  * Meta object persistence
+  * Meta object navigation
 * Tag scan
   * built-in support
     * Thumbnail
@@ -70,7 +70,7 @@ Want to add the hex output to a document? Use `Save As Image`. The menu command 
 
 ![alt Save hexdump](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/save%20hexdump.png)
 
-### Standalone Viewer
+### Standalone Viewer App
 
 Explorer's File Properties is compact in size. So, it can give the Tab only a limited real estate, and the view that can be generated is short and narrow. By default, the Tab outputs the hex digits in an 8-bytes-per-row format. It can output more bytes per row. But, you'd need to either use the scrollbar or choose a smaller font to see the digits you want. As an alternative, you can opt for the standalone viewer. That way, you don't have to live with the size constraint. Select `Open in New Window` from the context menu. The hex digits are now output in a 16-bytes-per-row format. If you need to see even more digits, you can choose the 32-bytes format. The standalone viewer sports a toolbar. Use it to quickly access main features of the Tab.
 
@@ -107,9 +107,9 @@ To build the installer, install [`Maximilian's Automation Utility`](https://gith
 
 ### HEXDUMPTAB Shell Propertysheet Extention DLL
 
-This is the main component project. It builds the Tab shell extension. The Tab consists of these components.
+This is the main component project. It builds the Tab shell extension. The Tab consists of the components below with the C++ class associations noted in parantheses.
 
-* Communication with host (Explorer)
+* Communication with the host (PropsheetExtImpl)
   * Propsheet extension (IShellPropSheetExt)
   * Custom host configuration (IHexDumpConfig)
 * View generation
