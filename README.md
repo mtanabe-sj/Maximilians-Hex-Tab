@@ -126,18 +126,18 @@ This is the main component project. It builds the Tab shell extension. The Tab c
   * BOM and Unicode
   * Persistence
 * Tag scan
- * Image support
- * Metadata parser
-  * Exif, XMP, ICCP, Photoshop
- * Scan server API
-  * IHexDumpScanData
-  * IHexDumpScanSite
+  * Image support
+  * Metadata parser
+    * Exif, XMP, ICCP, Photoshop
+  * Scan server API
+    * IHexDumpScanData
+    * IHexDumpScanSite
 * Utility
- * Codec wrapper
- * String manipulation
- * Space allocation
- * List management
- * Logging
+  * Codec wrapper
+  * String manipulation
+  * Space allocation
+  * List management
+  * Logging
 
 ### HEXDUMPDLG Viewer Application
 
