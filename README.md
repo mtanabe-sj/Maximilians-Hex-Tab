@@ -115,36 +115,35 @@ To build the installer, install [`Maximilian's Automation Utility`](https://gith
 
 ### HEXDUMPTAB Shell Propertysheet Extention DLL
 
-This is the main component project. It builds the Tab shell extension. The Tab consists of the components below with the C++ class associations noted in parantheses.
+This is the main component project. It builds the Tab shell extension. The Tab consists of the components below with the C++ class or COM interface associations noted in parantheses.
 
-* Communication with the host (PropsheetExtImpl)
-  * Propsheet extension (IShellPropSheetExt)
-  * Custom host configuration (IHexDumpConfig)
-* View generation
-* UI management and command invocation
-  * Thread local storage
-  * Keyboard accelerator
-  * Keyword search
-  * Print/page setup
-  * Page save/copy
-* Meta object management
-  * Region
-  * Annotation
-  * Shape
-  * BOM and Unicode
-  * Persistence
-* Tag scan
-  * Image support
-  * Metadata parser
-    * Exif, XMP, ICCP, Photoshop
-  * Scan server API (IHexDumpScanServer)
+* Communication with the host (class PropsheetExtImpl)
+  * Propsheet extension (interface IShellPropSheetExt)
+  * Custom host configuration (interface IHexDumpConfig)
+* View generation (class BinhexView)
+* UI management and command invocation (class BinhexDumpWnd)
+  * Thread local storage (class TLSData)
+  * Keyboard accelerator (class KeyboardAccel)
+  * Keyword search (class FindDlg)
+  * Print/page setup (class HexdumpPrintJob, class HexdumpPrintDlg)
+  * Page save/copy (class DataRangeDlg)
+* Meta object management (class BinhexMetaView)
+  * Tag (classes CRegionCollection, AnnotationCollection, AddTagDlg)
+  * Shape (classes GShapeCollection, GripCursor)
+  * BOM and Unicode (class BOMFile)
+  * Serialization (class persistMetafile)
+* Tag scan (class ScanTag)
+  * Image support (classes ScanTagJpg, ScanTagPng, ScanTagGif, ScanTagBmp, ScanTagIco)
+  * Text support (class ScanTagBOM)
+  * Metadata parser (classes MetadataExif, MetadataXMP, MetadataICCP, MetadataPhotoshop)
+  * Scan server API (class ScanTagExt, ScanDataImpl, interfaces IHexDumpScanSite, IHexDumpScanData)
 * Utility
-  * Codec wrapper
-  * String manipulation
+  * Codec wrapper (classes CodecImage, BitmapImage)
+  * String manipulation (classes ustring, astring, bstring)
   * Space allocation
-  * List management
+  * List management (classes simpleList, objList, strvalenum)
   * Registry configuration
-  * Logging
+  * Logging (EventLog)
 
 ### HEXDUMPDLG Viewer Application
 
