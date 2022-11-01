@@ -143,8 +143,8 @@ This is the main component project. It builds the Tab shell extension. The Tab c
 
 * Command line parser
 * Window management
- * Propsheet hosting
- * Toolbar management
+	* Propsheet hosting
+	* Toolbar management
 * Communication with the tab
 
 ### ScanSrvWebP Demo Scan Server
