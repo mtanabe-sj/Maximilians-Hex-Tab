@@ -10,28 +10,28 @@ Let's give you a functional overview first. Hopefull you develop a good idea on 
 ### Summary
 
 * Hex view generator
-o Small screen format
-o Large screen format
-o Keyword search
-o ASCII to hex digits
+  * Small screen format
+  * Large screen format
+  * Keyword search
+  * ASCII to hex digits
 * Meta objects
-o Regions and annotations as tags
-o Image annotation
-o Large-text annotation
-o Free-flowing shapes
-  o Translation and rotation
-  o Custom cursors
-o Meta data persistence
+  * Regions and annotations as tags
+  * Image annotation
+  * Large-text annotation
+  * Free-flowing shapes
+    * Translation and rotation
+    * Custom cursors
+  * Meta data persistence
 * Tag scan
-o built-in support
-  o Thumbnail
-  o Metadata parser: Exif, XMP, ICCP, Photoshop
-  o BOM, Unicode, UTF-8
-o External scan server
+  * built-in support
+    * Thumbnail
+    * Metadata parser: Exif, XMP, ICCP, Photoshop
+    * BOM, Unicode, UTF-8
+  * External scan server
 * Utility
-o Page setup and print
-o Save as bitmap image
-o Copy to clipboard
+  * Page setup and print
+  * Save as bitmap image
+  * Copy to clipboard
 
 ### Windows Explorer Integration
 
