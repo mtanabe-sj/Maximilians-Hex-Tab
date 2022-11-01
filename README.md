@@ -7,7 +7,7 @@ Maximilian's File Hex-Dump Tab is a Windows Explorer add-on written in C++. The 
 
 Let's give you a functional overview first. Hopefull you develop a good idea on what the Tab can do. Later on, we will get to more technical stuff.
 
-### Summary
+### At a Glance
 
 * Hex view generator
   * Small screen format
@@ -55,10 +55,11 @@ Note that colored regions, notes, and shapes are referred to as `meta` objects i
 
 The Tab has built-in support for detecting documented segments and structures of image data and automatically placing tags with descriptive information.
 
+![alt Tab view after jpeg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/tab%20after%20jpeg%20scan.png)
 
-The file types the Tab can scan are jpeg, jpg, png, bmp, gif, ico, and webp.
+The file types the Tab can scan are __jpeg__, __jpg__, __png__, __bmp__, __gif__, __ico__, and __webp__.
 
-The Tab provides an API for extending scan to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project ScanSrvWebp for the [API details]().
+The Tab provides an API for extending scan to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project [ScanSrvWebp](#ScanSrvWebP Demo Scan Server) for the API details.
 
 
 ### Print, Copy, or Save
@@ -111,52 +112,52 @@ To build the installer, install [`Maximilian's Automation Utility`](https://gith
 
 This is the main component project. It builds the Tab shell extension. The Tab consists of these components.
 
-communication with host (explorer)
- propsheet extension
- custom host configuration
-view generation
-ui management and command invocation
- thread local storage
- keyboard accelerator
- keyword search
- print/page setup
- page save/copy
-meta object management
- region
- annotation
- shape
- bom and unicode
- persistence
-tag scan
- image support
- metadata parser
-  exif, xmp, iccp, photoshop
- scan server api
-  IHexDumpScanData
-  IHexDumpScanSite
-utility
- codec wrapper
- string manipulation
- space allocation
- list management
- logging
+* Communication with host (explorer)
+ * Propsheet extension
+ * Custom host configuration
+* View generation
+* UI management and command invocation
+ * Thread local storage
+ * Keyboard accelerator
+ * Keyword search
+ * Print/page setup
+ * Page save/copy
+* Meta object management
+ * Region
+ * Annotation
+ * Shape
+ * BOM and Unicode
+ * Persistence
+* Tag scan
+ * Image support
+ * Metadata parser
+  * Exif, XMP, ICCP, Photoshop
+ * Scan server API
+  * IHexDumpScanData
+  * IHexDumpScanSite
+* Utility
+ * Codec wrapper
+ * String manipulation
+ * Space allocation
+ * List management
+ * Logging
 
 
 ### HEXDUMPDLG Viewer Application
 
-command line parser
-window management
- propsheet hosting
- toolbar management
-communication with the tab
+* Command line parser
+* Window management
+ * Propsheet hosting
+ * Toolbar management
+* Communication with the tab
 
 
 ### ScanSrvWebP Demo Scan Server
 
-ScanServerImpl
- IHexDumpScanServer
- IHexDumpScanData
- IHexDumpScanSite
+* ScanServerImpl
+ * IHexDumpScanServer
+ * IHexDumpScanData
+ * IHexDumpScanSite
 
 
 ## Contributing
