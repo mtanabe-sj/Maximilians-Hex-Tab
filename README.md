@@ -68,6 +68,8 @@ To send the hex output to a printer, use `Print`. Choose a printer from the list
 
 Want to add the hex output to a document? Use `Save As Image`. The menu command lets you copy it to the system clipboard. Paste it directly into your document. Or if you want it on a disk, you can save it as a PNG or BMP file, too.
 
+![alt Save hexdump](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/save%20hexdump.png)
+
 ### Standalone Viewer
 
 Explorer's File Properties is compact in size. So, it can give the Tab only a limited real estate, and the view that can be generated is short and narrow. By default, the Tab outputs the hex digits in an 8-bytes-per-row format. It can output more bytes per row. But, you'd need to either use the scrollbar or choose a smaller font to see the digits you want. As an alternative, you can opt for the standalone viewer. That way, you don't have to live with the size constraint. Select `Open in New Window` from the context menu. The hex digits are now output in a 16-bytes-per-row format. If you need to see even more digits, you can choose the 32-bytes format. The standalone viewer sports a toolbar. Use it to quickly access main features of the Tab.
