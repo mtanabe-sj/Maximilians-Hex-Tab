@@ -59,7 +59,7 @@ The Tab has built-in support for detecting documented segments and structures of
 
 The file types the Tab can scan are __jpeg__, __jpg__, __png__, __bmp__, __gif__, __ico__, and __webp__.
 
-The Tab provides an API for extending scan to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project [ScanSrvWebp](#ScanSrvWebP Demo Scan Server) for the API details.
+The Tab provides an API for extending scan to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project [ScanSrvWebp](doc:ScanSrvWebP Demo Scan Server) for the API details.
 
 
 ### Print, Copy, or Save
