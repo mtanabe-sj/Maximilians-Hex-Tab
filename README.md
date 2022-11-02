@@ -144,6 +144,8 @@ This is the main component project. It builds the Tab shell extension. The Tab c
   * Registry configuration (_functions Registry*_)
   * Logging (_EventLog_)
 
+#### Communication with the host
+
 Central to the Tab as an Explorer add-on is class PropsheetExtImpl. It creates and manages a Win32 property page bound to a property sheet managed by Explorer. The class implements IShellPropSheetExt which enables communication with the host app. PropsheetExtImpl hosts a child window of BinhexDumpWnd to manage view generation and interactions with the user. BinhexDumpWnd subclasses BinhexMetaView which manages the hex view and meta objects. Meta objects are tags (colored regions and annotations) and free-flowing graphical shapes that users can attach to parts of the hex view. Meta objects are serialized to and de-serialized from arrays of fixed-length structures forming a so-called meta file. Class persistMetafile is responsible for the operations. These are the meta object structures.
 
 ```C++
@@ -152,9 +154,25 @@ struct DUMPANNOTATIONINFO { WCHAR Text[256]; WCHAR TextEnd; BYTE Flags; ...; HBI
 struct DUMPSHAPEINFO { BYTE Shape; BYTE Flags; USHORT StrokeThickness; ...; COLORREF InteriorColor; };
 ```
 
-See _persistMetafile::save_ on how meta objects are serialized. This takes place when the OK or Apply button is selected. Loading or de-serialization of persisted meta objects happens automatically next time the Tab is opened for the same file. See the _persistMetafile::load_ method. A meta file that stores serialized meta objects is located in a subfolder of the per-user folder of _%LocalAppData%_. How does the load method know which meta file to read? The _save_ method generates a unique ID naming the meta file after it, and writes a named setting with the dumped file as the name and the meta file ID as the value in a per-user key of the system registry. The _load_ method makes a lookup for the dumped file in the registry and retrieves the meta file ID. Based on the file ID, it locates the meta file and de-serializes and loads the meta objects. The registry key that maintains the meta file mapping is HKEY_CURRENT_USER\SOFTWARE\mtanabe\HexDumpTab\MetaFiles. File mapping entries in the key look like this.
+See _persistMetafile::save_ on how meta objects are serialized. This takes place when the OK or Apply button is selected. Loading or de-serialization of persisted meta objects happens automatically next time the Tab is opened for the same file. See the _persistMetafile::load_ method. A meta file that stores serialized meta objects is located in a subfolder of the per-user folder of _%LocalAppData%_. How does the load method know which meta file to read? The _save_ method generates a unique ID naming the meta file after it, and writes a named setting with the dumped file as the name and the meta file ID as the value in a per-user key of the system registry. The _load_ method makes a lookup for the dumped file in the registry and retrieves the meta file ID. Based on the file ID, it locates the meta file and de-serializes and loads the meta objects. The registry key that maintains the meta file mapping is HKEY_CURRENT_USER\SOFTWARE\mtanabe\HexDumpTab\MetaFiles. Entries in the key look like this.
 
 ![alt Metafiles registry key](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/metafiles%20registry%20key.png)
+
+#### View Generation
+
+During the startup, _BinhexDumpWnd::OnCreate_ initializes the view generator by creating fonts, obtaining the screen resolution, and text metrics, and preparing a dump buffer. _BinhexDumpWnd::OnPaint_ responds to system view refresh requests by calling the view generator's core method, _BinhexView::repaint_. _repaint_ through the _refreshInternal_ callbacks perform these display tasks in this order.
+1) _BinhexMetaView_ reads source data.
+2) _BinhexView_ outputs a hex dump and draws a row selector.
+3) _BinhexMeataView_ paints the regions, annotations, and shapes.
+4) _BinhexDumpView_ marks the search hit, if occuring in the current page.
+
+#### UI Management
+
+#### Meta Object Management
+
+#### Tag Scan
+
+#### Utility
 
 
 
