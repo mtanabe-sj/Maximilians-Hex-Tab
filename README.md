@@ -124,6 +124,9 @@ This is the main component project. It builds the Tab shell extension. The Tab c
 * UI management and command invocation (_class BinhexDumpWnd_)
   * Thread local storage (_class TLSData_)
   * Keyboard accelerator (_class KeyboardAccel_)
+  * Context menu (_method BinhexDumpWnd::OnContextMenu_)
+  * Command processing (_method BinhexDumpWnd::OnCommand_)
+  * Drag and drop processing (_methods OnLButtonDown, OnMouseMove, OnLButtonUp_)
   * Keyword search (_class FindDlg_)
   * Print/page setup (_class HexdumpPrintJob, class HexdumpPrintDlg_)
   * Page save/copy (_class DataRangeDlg_)
@@ -167,6 +170,11 @@ During the startup, _BinhexDumpWnd::OnCreate_ initializes the view generator by 
 4) _BinhexDumpView_ marks the search hit, if occuring in the current page.
 
 #### UI Management
+
+In a standard Win32 window application, defining and routing keyboard shortcuts means adding an accelerator table to the resource file (rc) and calling TranslateAccelerator in the message pump. Unfortunately, this simple model does not work for the propsheet extension. The Tab does not own the message pump. To work around the shortcoming, the Tab sets up a message hook and intercepts Win32 messages generated in Explorer's message loop. If the intercepted message is intended for the Tab's main window (of BinhexDumpWnd), TranslateAccelerator is called generating a desired WM_COMMAND message. The accelerator loading and message interception and translation are implemented in class _KeyboardAccel_. Explorer is UI multi-threaded owning multiple message pumps. Multiple instances of the Tab may coexist. So to be able to bind to multiple pumps, the Tab uses WIn32 thread local storage and saves the per-thread hook descriptors. That way, multiple message hooks can be maintained. The TLS management is implemented in class _TLSData_. The Tab maintains a singlton instance of TLSData (the definition in dllmain.cpp).
+
+There two groups of commands exist. 
+
 
 #### Meta Object Management
 
