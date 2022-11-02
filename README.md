@@ -180,14 +180,18 @@ OnContextMenu of BinhexDumpWnd prepares and runs a context menu on detecting a r
 ![alt Context menu](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/context%20menu.png)
 
 |Menu label|Command ID|Handler|Remarks|
-|----------------------|----------------------|----------------------|---------------------------------------------------------|
-|Open in New Window|IDM_OPEN_NEW_WINDOW|OnOpenNewWindow|Removed in HEXDUMPDLG|
-|Bytes per Line|IDM_BPL_<N>|OnSelectBPR(N)|IDM_BPL_8 and accompanying IDM_SAME_FONTSIZE are grayed in HEXDUMPDLG|
-|Add Tag|IDM_ADD_TAG|OnAddTag|To be followed by parameter fill in dialog of AddTagDlg|
-|Add Note|IDM_ANNOTATE|OnAnnotate|addAnnotation of AnnotationCollection shows an empty note for user to fill|
-|Remove|IDM_REMOVE|OnRemoveMetadata|grayed out if no meta object is selected; method removeHere of CRegionCollection, AnnotationCollection, or GShapeCollection is called for actual removal|
-|Color Tag|IDM_COLOR_TAG0+N|changeColorHere of CRegionCollection makes color change|
-
+|----------------------|----------------------|----------------------|---------------------------------------------------|
+|Open in New Window|IDM_OPEN_NEW_WINDOW|OnOpenNewWindow|Removed in HEXDUMPDLG.|
+|Bytes per Line|IDM_BPL_(N)|OnSelectBPR(N)|IDM_BPL_8 and accompanying IDM_SAME_FONTSIZE are grayed in HEXDUMPDLG.|
+|Add Tag|IDM_ADD_TAG|OnAddTag|To be followed by parameter fill in dialog of AddTagDlg.|
+|Add Note|IDM_ANNOTATE|OnAnnotate|addAnnotation of AnnotationCollection shows an empty note for user to fill.|
+|Remove|IDM_REMOVE|OnRemoveMetadata|grayed out if no meta object is selected; method removeHere of CRegionCollection, AnnotationCollection, or GShapeCollection is called for actual removal.|
+|Color Tag|IDM_COLOR_TAG0+N|CRegionCollection::changeColorHere|N indexes static color palettes, s_regionInteriorColor and s_regionBorderColor.|
+|Remove All Tags|IDM_REMOVE_ALL|OnRemoveAllTags|CRegionCollection::clear deletes all regions and their associated annotations.|
+|Shape, Line/Rectangle/Circle|IDM_DRAW_(shape)|OnDrawShape(DUMPSHAPEINFO_SHAPE_(shape)|a DUMPSHAPEINFO is initialized for selected shape type and added to GShapeCollection.|
+|Shape, Properties, Line, Thickness|IDM_LINE_THICK(N)|OnLineThickness(N)|DUMPSHAPEINFO.StrokeThickness is set to selected thickness (1, 2, or 4)|
+|Shape, Properties, Line, Type|IDM_LINE_STRAIGHT/WAVY/ARROW/ARROW2|OnLineType(T)|DUMPSHAPEINFO.GeomOptions is set to e.g., DUMPSHAPEINFO_OPTION_WAVY for wavy line|
+|Shape, Properties, Line, Interior Color|IDM_COLOR_IN0+N|OnShapeInteriorColor(N)|DUMPSHAPEINFO.InteriorColor is set to index of selected color sample|
 Region colors
 
 
