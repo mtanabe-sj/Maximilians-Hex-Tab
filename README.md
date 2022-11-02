@@ -188,7 +188,7 @@ OnContextMenu of BinhexDumpWnd prepares and runs a context menu on detecting a r
 |Remove|IDM_REMOVE|OnRemoveMetadata|grayed out if no meta object is selected; method removeHere of CRegionCollection, AnnotationCollection, or GShapeCollection is called for actual removal.|
 |Color Tag|IDM_COLOR_TAG0+N|CRegionCollection::changeColorHere|N indexes static color palettes, s_regionInteriorColor and s_regionBorderColor.|
 |Remove All Tags|IDM_REMOVE_ALL|OnRemoveAllTags|CRegionCollection::clear deletes all regions and their associated annotations.|
-|Shape, Line/Rectangle/Circle|IDM_DRAW_(shape)|OnDrawShape(DUMPSHAPEINFO_SHAPE_(shape)|a DUMPSHAPEINFO is initialized for selected shape type and added to GShapeCollection.|
+|Shape, Line/Rectangle/Circle|IDM_DRAW_(shape)|OnDrawShape(shape)|a DUMPSHAPEINFO is initialized for selected shape type and added to GShapeCollection.|
 |Shape, Properties, Line, Thickness|IDM_LINE_THICK(N)|OnLineThickness(N)|DUMPSHAPEINFO.StrokeThickness is set to selected thickness (1, 2, or 4)|
 |Shape, Properties, Line, Type|IDM_LINE_(T)|OnLineType(T)|DUMPSHAPEINFO.GeomOptions is set to e.g., DUMPSHAPEINFO_OPTION_WAVY for wavy line. WAVY, ARROW, or ARROW2 are available. ARROW means an arrow head on one end. ARROW2 arrow head on both ends.|
 |Shape, Properties, Line, Interior Color|IDM_COLOR_IN0+N|OnShapeInteriorColor(N)|DUMPSHAPEINFO.InteriorColor is set to index of selected color sample|
