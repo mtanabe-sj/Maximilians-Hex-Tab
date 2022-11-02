@@ -180,6 +180,7 @@ OnContextMenu of BinhexDumpWnd prepares and runs a context menu on detecting a r
 ![alt Context menu](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/context%20menu.png)
 
 |Menu label|Command ID|Handler|Remarks|
+|----------------------|----------------------|----------------------|---------------------------------------------------------|
 |Open in New Window|IDM_OPEN_NEW_WINDOW|OnOpenNewWindow|Removed in HEXDUMPDLG|
 |Bytes per Line|IDM_BPL_<N>|OnSelectBPR(N)|IDM_BPL_8 and accompanying IDM_SAME_FONTSIZE are grayed in HEXDUMPDLG|
 |Add Tag|IDM_ADD_TAG|OnAddTag|To be followed by parameter fill in dialog of AddTagDlg|
