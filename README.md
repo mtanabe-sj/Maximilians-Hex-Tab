@@ -189,9 +189,9 @@ OnContextMenu of BinhexDumpWnd prepares and runs a context menu on detecting a r
 |Color Tag|IDM_COLOR_TAG0+N|changeColorHere of class CRegionCollection|N indexes static color palettes, s_regionInteriorColor and s_regionBorderColor.|
 |Remove All Tags|IDM_REMOVE_ALL|OnRemoveAllTags|clear of class CRegionCollection deletes all regions and their associated annotations.|
 |Shape, Line/Rectangle/Circle|IDM_DRAW_(shape)|OnDrawShape(shape)|a DUMPSHAPEINFO is initialized for selected shape type and added to GShapeCollection.|
-|Shape, Properties, Line, Thickness|IDM_LINE_THICK(N)|OnLineThickness(N)|DUMPSHAPEINFO.StrokeThickness is set to selected thickness (1, 2, or 4)|
+|Shape, Properties, Line, Thickness|IDM_LINE_THICK(N)|OnLineThickness(N)|DUMPSHAPEINFO.StrokeThickness is set to selected thickness (1, 2, or 4).|
 |Shape, Properties, Line, Type|IDM_LINE_(T)|OnLineType(T)|DUMPSHAPEINFO.GeomOptions is set to e.g., DUMPSHAPEINFO_OPTION_WAVY for wavy line. WAVY, ARROW, or ARROW2 are available. ARROW means an arrow head on one end. ARROW2 arrow head on both ends.|
-|Shape, Properties, Line, Interior Color|IDM_COLOR_IN0+N|OnShapeInteriorColor(N)|DUMPSHAPEINFO.InteriorColor is set to index of selected color sample|
+|Shape, Properties, Line, Interior Color|IDM_COLOR_IN0+N|OnShapeInteriorColor(N)|DUMPSHAPEINFO.InteriorColor is set to index of selected color sample.|
 |Shape, Properties, Interior Color|IDM_COLOR_IN0+N, IDM_COLOR_IN_TRANSPARENT|OnShapeInteriorColor(N), OnShapeInteriorTransparent|DUMPSHAPEINFO.InteriorColor is set to index of selected color, and DUMPSHAPEINFO.Flags raises DUMPSHAPEINFO_FLAG_FILLED. TRANSPARENT clears DUMPSHAPEINFO_FLAG_FILLED.|
 |Shape, Properties, Outline Color|IDM_COLOR_OUT0+N|OnShapeOutlineColor(N)|DUMPSHAPEINFO
 .OutlineColor is set to index of selected color.|
