@@ -206,7 +206,7 @@ The menu commands and how they are processed are summarized below.
 |---------------|-----------------|------------------------------------------------------------------|
 |WM_LBUTTONDOWN|OnLButtonDown|1) Clear prior ASCII selection. 2) Start drag and drop on a shape object. 3) Check annotation grab. 4) Start a region drag to extend the selection.|
 |WM_MOUSEMOVE|OnMouseMove|Button Down: 1) Continue shape drag. 2) Continue annotation drag. 3) Continue stretching or shrinking of a region.|
-|||No button: 1) Grab a shape. 2) Highlight shape at cursor. 3) Highlight annotation at cursor.|
+|||Button Up: 1) Grab a shape. 2) Highlight shape at cursor. 3) Highlight annotation at cursor.|
 |WM_LBUTTONUP|OnLButtonUp||
 |WM_VSCROLL|OnVScroll||
 |WM_HSCROLL|OnHScroll||
