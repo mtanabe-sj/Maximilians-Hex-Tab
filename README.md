@@ -204,10 +204,10 @@ The menu commands and how they are processed are summarized below.
 
 |Message|Handler|Invoked Operations|
 |---------------|-----------------|------------------------------------------------------------------|
-|WM_LBUTTONDOWN|OnLButtonDown|1) Clear prior ASCII selection. 2) Start drag and drop on a shape object. 3) Check annotation grab. 4) Start a region drag to extend the selection.|
-|WM_MOUSEMOVE|OnMouseMove|Button Down: 1) Continue shape drag. 2) Continue annotation drag. 3) Continue stretching or shrinking of a region.|
-|||Button Up: 1) Grab a shape. 2) Highlight shape at cursor. 3) Highlight annotation at cursor.|
-|WM_LBUTTONUP|OnLButtonUp||
+|WM_LBUTTONDOWN|OnLButtonDown|1) Clear prior selection in ASCII column. 2) Start drag and drop on a shape object, or 3) Check annotation grab, or 4) Start a region drag to extend the selection.|
+|WM_MOUSEMOVE|OnMouseMove|Button Down: 1) Continue shape drag, or 2) Continue annotation drag, or 3) Continue stretching the region.|
+|||Button Up: 1) Grab a shape, or 2) Highlight shape at cursor, or 3) Highlight annotation at cursor.|
+|WM_LBUTTONUP|OnLButtonUp|1) Stop ongoing drag operation and execute drop, or 2) Draw a box around hex digits corresponding to ASCII column selection.|
 |WM_VSCROLL|OnVScroll||
 |WM_HSCROLL|OnHScroll||
 
