@@ -214,9 +214,9 @@ Another important aspect of UI management is handling system events for drag and
 |WM_VSCROLL|OnVScroll|The scroll page width is given by _vi.RowsPerPage_. Page-wise actions invoke startFadeoutDelay of AnnotationCollection to refresh with annotation fadeout.|
 |WM_HSCROLL|OnHScroll|The scroll page width is given by _vi.ColsPerPage_. Horizontal scroll bar is visible only in 16 or 32 BPR. The offset column remains visible even when the hex and ASCII columns are shifted.|
 
-Some of the commands metioned above engage dialog interaction. They are _Keyword Search_, _Print_, and _Save as Image_.
+Some of the commands metioned above engage dialog interaction. They are _Keyword Search_, _Save as Image_, and _Print_.
 
-_Keyword Search_ uses dialog class FindDlg. Users can specify a keyword in one of the three encodings.
+_OnFindData_ for _Keyword Search_ uses dialog class FindDlg. Users can specify a keyword in one of the three encodings.
 
 	* UTF-8 (FINDCONFIGFLAG_ENCODING_UTF8)
 	* UTF-16 (FINDCONFIGFLAG_ENCODING_UTF16)
@@ -224,7 +224,7 @@ _Keyword Search_ uses dialog class FindDlg. Users can specify a keyword in one o
 
 The dialog's OnCommand calls _updateSearchConfig_ to save the keyword string in the selected encoding in the output structure of _FINDCONFIG_. OnPaint draws the re-encoded keyword bytes as rows of 2-digit hex numbers as a visual feedback so that the user knows what binary byte value is being searched for. On return from the dialog, _searchAndShow_ calls _ROFile::search_ to search the file. If it finds a match in the current page, it simply refreshes the view. If the match is not in the current page, it lets _scrollToFileOffset_ to scroll to the page.
 
-Page save/copy (_class DataRangeDlg_)
+_OnSaveData_ for _Save as Image_ is another dialog-invoking command. It uses _class DataRangeDlg_ to interact with the user. The dialog class collects three settings, a destination medium, a data range, grouping of annotations or not. The data range can be specified either in number of bytes or number of dump lines. To help the user see the change, _BinhexMetaPageView_, a subclass of _BinhexMetaView_, is used to give a preview of what the hex dump as an image would look like. The view generator subclass is capable of splitting the viewport into two, one showing the hex digits and ASCII column, and the other showing the annotations that belong to the data range. It uses the split viewport in response to selection of the _IDC_CHECK_SEGREGATE_ANNOTS_ option. Actually, _BinhexMetaPageView_ generates a full-scale bitmap image first. Then, it scales it to fit the preview rectangle. _DataRangeDlg_ keeps the full-scale bitmap in a member variable. _OnSaveData_ picks up the bitmap from the dialog. If the destination is file, the method uses the bitmap helper class _BitmapImage_ to a file of a user-supplied name. If the destination is clipboard, Win32 SetClipboardData API is called on the bitmap.
 
 Print/page setup (_class HexdumpPrintJob, class HexdumpPrintDlg_)
 
