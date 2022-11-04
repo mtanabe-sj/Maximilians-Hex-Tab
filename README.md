@@ -226,7 +226,15 @@ The dialog's OnCommand calls _updateSearchConfig_ to save the keyword string in 
 
 _OnSaveData_ for _Save as Image_ is another dialog-invoking command. It uses _class DataRangeDlg_ to interact with the user. The dialog class collects three settings, a destination medium, a data range, grouping of annotations or not. The data range can be specified either in number of bytes or number of dump lines. To help the user see the change, _BinhexMetaPageView_, a subclass of _BinhexMetaView_, is used to give a preview of what the hex dump as an image would look like. The view generator subclass is capable of splitting the viewport into two, one showing the hex digits and ASCII column, and the other showing the annotations that belong to the data range. It uses the split viewport in response to selection of the _IDC_CHECK_SEGREGATE_ANNOTS_ option. Actually, _BinhexMetaPageView_ generates a full-scale bitmap image first. Then, it scales it to fit the preview rectangle. _DataRangeDlg_ keeps the full-scale bitmap in a member variable. _OnSaveData_ picks up the bitmap from the dialog. If the destination is file, the method uses the bitmap helper class _BitmapImage_ to a file of a user-supplied name. If the destination is clipboard, Win32 SetClipboardData API is called on the bitmap.
 
-Print/page setup (_class HexdumpPrintJob, class HexdumpPrintDlg_)
+The final dialog-based command is _Print_. the dialog class _HexdumpPrintDlg_ runs a page setup, and the worker class _HexdumpPrintJob_ draws the selected pages of hex dump output to the device context of a selected printer.
+
+There are a few caveats when using the PrintDlg API.
+https://docs.microsoft.com/en-us/windows/win32/api/commdlg/nc-commdlg-lpprinthookproc
+
+PRINTDLGORD dialog template customization
+Font metrics re-calibration
+print job flow
+
 
 
 #### Meta Object Management
