@@ -169,6 +169,8 @@ During the startup, _BinhexDumpWnd::OnCreate_ initializes the view generator by 
 3) _BinhexMeataView_ paints the regions, annotations, and shapes.
 4) _BinhexDumpView_ marks the search hit, if occuring in the current page.
 
+Class _ROFile_ serves bytes from the file being examined to the view generator. It wraps Win32 file management API. It uses structure _FILEREADINFO_ to buffer file data and track the current read offset. You can think of a pointer to FILEREADINFO like the traditional C file pointer. _BinhexDumpWnd_ subclasses _ROFile_ and uses its methods to read the file.
+
 #### UI Management
 
 In a standard Win32 window application, defining and routing keyboard shortcuts means adding an accelerator table to the resource file (rc) and calling TranslateAccelerator in the message pump. Unfortunately, this simple model does not work for the propsheet extension. The Tab does not own the message pump. To work around the shortcoming, the Tab sets up a message hook and intercepts Win32 messages generated in Explorer's message loop. If the intercepted message is intended for the Tab's main window (of BinhexDumpWnd), TranslateAccelerator is called generating a desired WM_COMMAND message. The accelerator loading and message interception and translation are implemented in class _KeyboardAccel_. Explorer is UI multi-threaded owning multiple message pumps. Multiple instances of the Tab may coexist. So to be able to bind to multiple pumps, the Tab uses WIn32 thread local storage and saves the per-thread hook descriptors. That way, multiple message hooks can be maintained. The TLS management is implemented in class _TLSData_. The Tab maintains a singlton instance of TLSData (the definition in dllmain.cpp).
@@ -201,6 +203,7 @@ The menu commands and how they are processed are summarized below.
 |Find|IDM_FINDDATA|OnFindData|FindDlg is run, followed by navigation with searchAndShow to found data.|
 |Scan|IDM_SCANTAG_START|OnScanTagStart|A ScanTag subclass runs on worker thread. Successful completion posts IDM_SCANTAG_FINISH with status 0.  OnScanTagFinish responds by persisting scanned tags in meta file, and trigger a view refresh with fade-out.|
 
+Another important aspect of UI management is handling system events for drag and drop and page scroll actions. The Tab handles these system messages.
 
 |Message|Handler|Invoked Operations|
 |---------------|-----------------|------------------------------------------------------------------|
@@ -210,6 +213,20 @@ The menu commands and how they are processed are summarized below.
 |WM_LBUTTONUP|OnLButtonUp|1) Stop ongoing drag operation and execute drop, or 2) Draw a box around hex number corresponding to ASCII column selection.|
 |WM_VSCROLL|OnVScroll|The scroll page width is given by _vi.RowsPerPage_. Page-wise actions invoke startFadeoutDelay of AnnotationCollection to refresh with annotation fadeout.|
 |WM_HSCROLL|OnHScroll|The scroll page width is given by _vi.ColsPerPage_. Horizontal scroll bar is visible only in 16 or 32 BPR. The offset column remains visible even when the hex and ASCII columns are shifted.|
+
+Some of the commands metioned above engage dialog interaction. They are _Keyword Search_, _Print_, and _Save as Image_.
+
+_Keyword Search_ uses dialog class FindDlg. Users can specify a keyword in one of the three encodings.
+
+	* UTF-8 (FINDCONFIGFLAG_ENCODING_UTF8)
+	* UTF-16 (FINDCONFIGFLAG_ENCODING_UTF16)
+	* 2-digit hex (FINDCONFIGFLAG_ENCODING_RAW)
+
+The dialog's OnCommand calls _updateSearchConfig_ to save the keyword string in the selected encoding in the output structure of _FINDCONFIG_. OnPaint draws the re-encoded keyword bytes as rows of 2-digit hex numbers as a visual feedback so that the user knows what binary byte value is being searched for. On return from the dialog, _searchAndShow_ calls _ROFile::search_ to search the file. If it finds a match in the current page, it simply refreshes the view. If the match is not in the current page, it lets _scrollToFileOffset_ to scroll to the page.
+
+Page save/copy (_class DataRangeDlg_)
+
+Print/page setup (_class HexdumpPrintJob, class HexdumpPrintDlg_)
 
 
 #### Meta Object Management
