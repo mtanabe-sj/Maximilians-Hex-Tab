@@ -232,12 +232,9 @@ There are a few caveats you need to be aware of when using the [PrintDlg API](ht
 
 To customize the PrintDlg UI, edit the PRINTDLGORD dialog template in res\hexdumptab.rc2. PRINTDLGORD needs dlgs.h of the Windows SDK for control IDs. The customization includes a preview pane. A change made to the print range, margins, Group Notes, or Fit to Page Width is immediately reflected in the preview display. Note that the preview pane (IDC_STATIC_PAGE1) is a static control with style SS_OWNERDRAW. OnCommand responds to control events by invalidating the preview pane. OnDrawItem responds to the refresh request by updating the preview output. The method uses class _BinhexMetaPageView_ to turn the starting or ending page into a bitmap image which is then scaled to fit into the margins.
 
+_OnPrintData_ calls _HexdumpPrintDlg::startPrinting_ to print the selected pages. _startPrinting_ creates an instance of _HexdumpPrintJob_ passing the PRINTDLG structure filled with a printer descriptor and page settings chosen in the setup dialog. _HexdumpPrintJob_ runs a worker on a new thread to process the print job. If the Cancel button is clicked, the host generates a PSN_QUERYCANCEL invoking _propsheetQueryCancel_ of _BinhexDumpWnd_. On receiving a confirmation from the user, _BinhexDumpWnd_ aborts the print job by calling _HexdumpPrintJob::stop_. The _stop_ method raises the thread kill signal (_kill_). The print task loop of _HexdumpPrintJob::runWorker_ detects the raised _kill_ and terminates the worker. If the print job completes, _runWorker_ posts an IDM_PRINT_EVENT_NOTIF notification for TskFinishJob to _BinhexDumpWnd_ which calls _HexdumpPrintJob::stop_ to make sure the worker is terminated.
 
-
-
-Font metrics re-calibration
-print job flow
-
+_HexdumpPrintJob_ uses GDI printer support. So, printing to a printer is basically a call to _BinhexView::repaint_ just like displaying the page on the monitor is a call to the same _repaint_ method. Regardless of the destination being a printer or monitor, the code that _BinhexMetaView_ runs is essentially the same. The difference is in device context, meaning, i.e., the printer uses a high resolution of 600 dpi while the display monitor uses a low 96 dpi. Well, actually, there is a slight difference between the code of _HexdumpPrintJob_ which inherits _BinhexMetaPageView_ and the code of _BinhexDumpWnd_, a subclass of _BinhexMetaView_. _HexdumpPrintJob_ re-calibrates the font metrics. What does tha mean?
 
 
 #### Meta Object Management
