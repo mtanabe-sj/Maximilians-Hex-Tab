@@ -239,7 +239,7 @@ Why is that? It boils down to rounding error. A 10-pt fixed-pitch Courier font i
 
 The problem is addressed this way.
 * Call GDI GetTextExtentExPoint on a string of as many 'X' characters as necessary to fill a hex-dump row. That gives us an accurate logical paper width. When printing, go an extra step in _setupViewport_ after the logical-to-device coordinate mapping is calculated. Keep the full extents (width and height) of the 'X' row in VIEWINFO.FullRowExts. It will be used to compensate for the rounding error. 
-* Override BinhexView when it calculates the x-coordinate of the position of a hex number or ASCII dump character. BinhexView gets the position by multiplying the character width by the column position. The override of _HexdumpPrintJob_ reads the x-coordinate by dividing a real number of FullRowExts.cx by the column position and converting the result in floating point to an integer by calling lrint.
+* Override BinhexView when it calculates the x-coordinate of the position of a hex number or ASCII dump character. BinhexView gets the position by multiplying the character width by the column position. _HexdumpPrintJob_ uses two overrides, one for hex number, and the other for ASCII character. The two do this. Compute the x-coordinate by dividing FullRowExts.cx by the column position.
 
 ```C++
 void HexdumpPrintJob::setupViewport()
@@ -258,6 +258,17 @@ void HexdumpPrintJob::setupViewport()
 	// ask gdi to measure the full width.
 	GetTextExtentExPointA(_hdc, src, src._length, 0, NULL, NULL, &_vi.FullRowExts);
 	SelectObject(_hdc, hf0);
+}
+
+int HexdumpPrintJob::_getAscColCoord(int colPos)
+{
+	if ((_setup->flags & HDPSP_FLAG_FITTOWIDTH) && _vi.FullRowExts.cx != 0)
+	{
+		int p2 = OFFSET_COL_LEN + LEFT_SPACING_COL_LEN + RIGHT_SPACING_COL_LEN + COL_LEN_PER_DUMP_BYTE * _vi.BytesPerRow + colPos;
+		int x = MulDiv(_vi.FullRowExts.cx, p2, _setup->requiredCols);
+		return x;
+	}
+	return BinhexMetaView::_getAscColCoord(colPos);
 }
 ```
 
