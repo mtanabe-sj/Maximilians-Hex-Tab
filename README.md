@@ -234,11 +234,16 @@ To customize the PrintDlg UI, edit the PRINTDLGORD dialog template in res\hexdum
 
 _OnPrintData_ calls _HexdumpPrintDlg::startPrinting_ to print the selected pages. _startPrinting_ creates an instance of _HexdumpPrintJob_ passing the PRINTDLG structure filled with a printer descriptor and page settings chosen in the setup dialog. _HexdumpPrintJob_ runs a worker on a new thread to process the print job. If the Cancel button is clicked, the host generates a PSN_QUERYCANCEL invoking _propsheetQueryCancel_ of _BinhexDumpWnd_. On receiving a confirmation from the user, _BinhexDumpWnd_ aborts the print job by calling _HexdumpPrintJob::stop_. The _stop_ method raises the thread kill signal (_kill_). The print task loop of _HexdumpPrintJob::runWorker_ detects the raised _kill_ and terminates the worker. If the print job completes, _runWorker_ posts an IDM_PRINT_EVENT_NOTIF notification for TskFinishJob to _BinhexDumpWnd_ which calls _HexdumpPrintJob::stop_ to make sure the worker is terminated.
 
-_HexdumpPrintJob_ takes advantage of device independence of GDI. Rendering to a printer is basically the same as displaying the page on a monitor. Both call _BinhexView::repaint_. The difference is in configuration. The text metrics differs because the device contexts of the two media use different resolutions. The printer uses a high definition of 600 dpi while the display monitor uses a low 96 dpi. Only the metrics is different. But, the code is the same. So, I thought. Actually, the code had to be modified for the printer DC. If you look at _drawHexDump_ and _finishDumpLine_ of _BinhexView_, you see that the hex numbers and ASCII characters are buffered together and rendered using DrawText API per row. This strategy is easy to implement. But it has a drawback. The further away from the start of the row a character is positioned, the less accurate the character position becomes. When previewed on screen, the rows are a snuggle fit inside the margins (because the Fit to Width option was used). But, when printed, the rows are too short leaving a gap between the ASCII column and the right margin or too long sticking past the right margin. 
+_HexdumpPrintJob_ takes advantage of device independence of GDI. Rendering to a printer is basically the same as displaying the page on a monitor. Both call _BinhexView::repaint_. The difference is in configuration. The text metrics differs because the device contexts of the two media use different resolutions. The printer uses a high definition of 600 dpi while the display monitor uses a low 96 dpi. Only the metrics is different. But, the code is the same. So, I thought. Actually, the code had to be modified for the printer DC. If you look at _drawHexDump_ and _finishDumpLine_ of _BinhexView_, you see that the hex numbers and ASCII characters are buffered together and rendered using DrawText API per row. This strategy is easy to implement. But it has a drawback. The further away from the start of the row a character is positioned, the less accurate the character position becomes. When previewed on screen, the rows are a snuggle fit inside the margins (because the Fit to Width option was used). But, when printed, the rows are too short leaving a gap between the ASCII column and the right margin or too long sticking past the right margin.
+
 Why is that? It boils down to rounding error. A 10-pt fixed-pitch Courier font in a 96-dpi screen context translates to 8 pixels in character width. The same 10-pt Courier in a 600-dpi printer context is 83 dots wide. The low-def screen context has a single significant figure, while the high-def printer context has two significant figures. If the true 10-pt character has a screen width of 8.9 pixels but was rounded off to 8 due to float-to-integer truncation, that's an error of 0.9/8 = 11%. For the printer context, the rounding error can be as large as 0.9/83 = 1%. What matters to us is that the screen metrics tends to be more inaccurate, and that the inaccuracy is many times over for the character at the end of the row. The printer metrics is less so. This is why a previewed page may not actually fit inside the margins when printed. 
 
-The problem is addressed this way.
+Compounding the problem is this. The Tab lets users tag pieces of data. The selected range is colored and outlined. To achieve the effect, the Tab locates the front of the data range in device coordinates and redraws the hex numbers and ASCII text over the range. The starting location is calculated by multiplying the character width by the column position of the range front. The rounding error in the character width becomes progressively large for a character toward the end of the row, and the character and its bounding outline appear off, displaced from the original position. Even if the error is 1%, when multiplied by the number of character spaces, it becomes significant and makes the displacement noticeable.
+
+The abovementioned rounding problems are addressed this way.
+
 * Call GDI GetTextExtentExPoint on a string of as many 'X' characters as necessary to fill a hex-dump row. That gives us an accurate logical paper width. When printing, go an extra step in _setupViewport_ after the logical-to-device coordinate mapping is calculated. Keep the full extents (width and height) of the 'X' row in VIEWINFO.FullRowExts. It will be used to compensate for the rounding error. 
+
 * Override BinhexView when it calculates the x-coordinate of the position of a hex number or ASCII dump character. BinhexView gets the position by multiplying the character width by the column position. _HexdumpPrintJob_ uses two overrides, one for hex number, and the other for ASCII character. The two do this. Compute the x-coordinate by dividing FullRowExts.cx by the column position.
 
 ```C++
@@ -271,15 +276,6 @@ int HexdumpPrintJob::_getAscColCoord(int colPos)
 	return BinhexMetaView::_getAscColCoord(colPos);
 }
 ```
-
-
-_HexdumpPrintJob_ uses overrides to achieve 
-Unfortunately, 
-
-Well, actually, there is a slight difference in code between _HexdumpPrintJob_ and _BinhexDumpWnd_. 
-The former inherits _BinhexMetaPageView_, while the latter inherits _BinhexMetaView_. 
-
-_HexdumpPrintJob_ re-calibrates the font metrics. What does tha mean?
 
 
 #### Meta Object Management
