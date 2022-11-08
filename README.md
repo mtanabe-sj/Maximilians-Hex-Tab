@@ -301,12 +301,18 @@ public:
 class BinhexDumpWnd : public _ChildWindow, public BinhexMetaView { ... };
 ```
 
+In processing user-issued commands or responding to drag and drop actions, BinhexDumpWnd operate on member objects of the meta object collections using operational methods of CRegionOperation, AnnotationOperation, or GShapeOperation or their subclasses.
+
+
 #### Tag Scan
 
-  * Image support (_classes ScanTagJpg, ScanTagPng, ScanTagGif, ScanTagBmp, ScanTagIco_)
-  * Text support (_class ScanTagBOM_)
-  * Metadata parser (_classes MetadataExif, MetadataXMP, MetadataICCP, MetadataPhotoshop_)
-  * Scan server API (_class ScanTagExt, ScanDataImpl, interfaces IHexDumpScanSite, IHexDumpScanData_)
+For popular image types, the Tab can scan the file data for documented data segments and structures and mark them in colors and annotate with descriptive text. A thumbnail image based on the source image data is generated and placed in an annotation attached to the image data section.
+
+The Tab natively supports images of JPEG, PNG, GIF, BMP, and ICO. It deploys classes ScanTagJpg, ScanTagPng, ScanTagGif, ScanTagBmp, or ScanTagIco_, respectively, in response to the image file's extension name. See _BinhexDumpWnd::OnScanTagStart_. ScanTag and its subclasses use MetadataExif and other parser classes to parse the well-known metadata of Exif, XMP, ICC Profile, and Adobe Photoshop. 
+
+What about other image types? What about non-image files? To address such needs, the Tab provides a scan server API consisting of headers of COM interface deinitions and registration information. There is a demo server made available to give a quick jump start to those interested in expanding the Tab's scan capacity. Refer to the demo project for the details.
+
+The Tab uses implements a scan server hosting site in class ScanTagExt. _OnScanTagStart_ calls the static _ScanTagExt::CanScanFile_ method to determine if there is an external scan server ready for the input file. If there is, the method runs an instance of _ScanTagExt_. _ScanTagExt::runInternal_ instantiates the server, and initializes the server passing an _IHexDumpScanSite_ object (actually, _this_ of the _ScanTagExt_ instance) and an _IHexDumpScanData_ object. Scan servers use methods on _IHexDumpScanSite_ to access host services and methods on _IHexDumpScanData_ to access data of the source file being scanned.
 
 
 #### Utility
