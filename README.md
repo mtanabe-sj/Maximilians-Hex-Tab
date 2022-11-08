@@ -327,13 +327,51 @@ The viewer consists of these components.
 	* Toolbar management (class ToolbarWindow)
 * Communication with the tab (interfaces IShellPropSheetExt and IHexDumpConfig)
 
+If you are interested in how Explorer loads a propsheet extension, check out _PropsheetDlg::createShellPropsheetExt_. The viewer app uses the customization interface IHexDumpConfig to configure its tool bar with private information from the Tab.
+
 
 ### ScanSrvWebP Demo Scan Server
 
-* ScanServerImpl
-  * IHexDumpScanServer
-  * IHexDumpScanData
-  * IHexDumpScanSite
+As explained in Section [Tag Scan](#Tag-Scan), the Tab lets you add an external scan server. If you are interested in writing one, read the notes below, see how the demo does it first, and then, rewrite it to suite your needs.
+
+The demo server supports WebP. WebP is well documented by Google who developed it in [this article](https://developers.google.com/speed/webp).
+
+The basic formatting element WebP uses is the _chunk_ of _RIFF_. It is a generalized structure to package a piece of payload data, its size in bytes, and a textual code uniquely identifying the data. A file in WebP starts with a WebP file header of 12 bytes.
+
+012345678901
+RIFF****WEBP
+
+where the **** 4-byte sequence is the file size in bytes. In its simplest form, WebP has two components, a WebP file header followed by a VP8 chunck for lossy compression or a VP8L chunk for lossless compression. Usually, however, WebP uses an extended format called VP8X. 
+
+In terms of data structure, WebP is much like PNG. It's composed with well-defined data blocks, a.k.a., chunks. Parsing of WebP data is similer to parsing of PNG.
+	
+#### Server Registration
+
+Since a scan server is a COM server, standard registration with COM is made in key HKCR\CLSID\{Server-CLSID}. The demo server has a CLSID of {6ccda86f-3c63-11ed-9d82-00155d938f70}.
+
+![alt Scan server clsid registration](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/scan%20server%20clsid%20registration.png)
+	
+To let the Tab know the server's availability, the scan server makes these settings under HKLM.
+ScanServers: .webp --> {Server-CLSID}
+ExtGroups: .webp --> image
+
+The above configuration settings instruct the Tab to deploy the server if the file has an extension of .webp and find the COM server at the specified CLSID. When it runs a File Open dialog, the Tab adds the extension name (.webp) from the registry key to the file extensions of the _image_ group so that if the user restricts file listing to images, files of .webp are listed as well.
+
+![alt Scan server registration](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/scan%20server%20registration.png)
+
+![alt Scan server ext-group registration](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/scan%20server%20ext-group%20registration.png)
+	
+#### Interface Implementation
+
+The Tab defines three interfaces, one for a scan server, one for a scan site, and the other for a scan data. The scan server interface is implemented and exposed by a scan server. The Tab which is a client of the scan server hosts the server and invokes the server's scan function through the interface.
+	
+* IHexDumpScanServer
+* IHexDumpScanSite
+* IHexDumpScanData
+
+Scan servers implement the scan server interface IHexDumpScanServer. The Tab implements the other two. Scan servers use the data interface to read and search the file data. Servers can also use it to ask the Tab to parse metadata on its behalf.
+
+A scan server may want to access services of the Tab as well as attributes of the dump file. It can do so through the scan site interface. The Tab implements the site interface on its _ScanTagExt_ object. It passes a pointer to the interface to the server when it calls the server's Init method to give the server a chance to initialize itself based on the file attributes available from the data and site interfaces the server receives.
 
 ```C++
 DECLARE_INTERFACE_(IHexDumpScanData, IUnknown)
@@ -346,7 +384,11 @@ DECLARE_INTERFACE_(IHexDumpScanData, IUnknown)
 	STDMETHOD(Search) (THIS_ LPBYTE BytesToSearch, ULONG ByteCount) PURE;
 	STDMETHOD(ParseMetaData)(THIS_ SCAN_METADATA_TYPE MetaType, LONGLONG MetaOffset, LONG MetaLength, SHORT ParentIndex, SHORT *TagIndex) PURE;
 };
+```
 
+The server uses methods TagData and Annotate of the site interface to mark a block of scanned data as a colored region with a description, and attach a descriptive note or bitmap image to a data byte, respectively.
+	
+```C++
 DECLARE_INTERFACE_(IHexDumpScanSite, IUnknown)
 {
 	...
@@ -356,7 +398,11 @@ DECLARE_INTERFACE_(IHexDumpScanSite, IUnknown)
 	STDMETHOD(TagData)(THIS_ USHORT Flags, LONGLONG TagOffset, LONG TagLength, BSTR TagNote, SHORT ParentIndex, SHORT *TagIndex) PURE;
 	STDMETHOD(Annotate)(THIS_ LONG TagIndex, VARIANT *SourceData) PURE;
 };
+```
 
+The Tab calls Init to initialize the scan server, Scan to start a tag scan, and Term to terminate the server. If it receives a fail code from the methods, the Tab calls GetErrorMessage to retrieve a corresponding error message.
+	
+```C++
 DECLARE_INTERFACE_(IHexDumpScanServer, IUnknown)
 {
 	...
@@ -367,10 +413,12 @@ DECLARE_INTERFACE_(IHexDumpScanServer, IUnknown)
 };
 ```
 
+
 ## Contributing
 
 Bug reports and enhancement requests are welcome.
 
+	
 ## License
 
 Copyright (c) mtanabe, All rights reserved.
