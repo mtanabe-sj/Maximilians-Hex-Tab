@@ -240,11 +240,11 @@ Why is that? It boils down to rounding error. A 10-pt fixed-pitch Courier font i
 
 Compounding the problem is this. The Tab lets users tag pieces of data. The selected range is colored and outlined. To achieve the effect, the Tab locates the front of the data range in device coordinates and redraws the hex numbers and ASCII text over the range. The starting location is calculated by multiplying the character width by the column position of the range front. The rounding error in the character width becomes progressively large for a character toward the end of the row, and the character and its bounding outline appear off, displaced from the original position. Even if the error is 1%, when multiplied by the number of character spaces, it becomes significant and makes the displacement noticeable.
 
-The abovementioned rounding problems are addressed this way.
+The abovementioned metrics problems are addressed this way.
 
-* Call GDI GetTextExtentExPoint on a string of as many 'X' characters as necessary to fill a hex-dump row. That gives us an accurate logical paper width. When printing, go an extra step in _setupViewport_ after the logical-to-device coordinate mapping is calculated. Keep the full extents (width and height) of the 'X' row in VIEWINFO.FullRowExts. It will be used to compensate for the rounding error. 
+* Call GDI _GetTextExtentExPoint_ on a string of as many 'X' characters as necessary to fill a hex-dump row. That gives us an accurate logical paper width. When printing, go an extra step in _setupViewport_ after the logical-to-device coordinate mapping is calculated. Keep the full extents (width and height) of the 'X' row in _VIEWINFO.FullRowExts_. It will be used to compensate for the rounding error. 
 
-* Override BinhexView when it calculates the x-coordinate of the position of a hex number or ASCII dump character. BinhexView gets the position by multiplying the character width by the column position. _HexdumpPrintJob_ uses two overrides, one for hex number, and the other for ASCII character. The two do this. Compute the x-coordinate by dividing FullRowExts.cx by the column position.
+* Override _BinhexView_ when it calculates the x-coordinate of the position of a hex number or ASCII dump character. _BinhexView_ gets the position by multiplying the character width by the column position. _HexdumpPrintJob_ uses two overrides, one for hex number, and the other for ASCII character. The two do this. Compute the x-coordinate by dividing _FullRowExts.cx_ by the column position.
 
 ```C++
 void HexdumpPrintJob::setupViewport()
@@ -277,10 +277,37 @@ int HexdumpPrintJob::_getAscColCoord(int colPos)
 }
 ```
 
-
 #### Meta Object Management
 
+Meta objects regard data range definitions called colored regions, annotations attached to specific data bytes, and graphical shapes attached to specific data bytes. These objects are created and managed by the Tab. They are stored in a data file managed by _persistMetafile_. The Tab uses the term Tag to refer to a colored region with an annotation.
+
+The meta objects are managed by the three collection classes which all derive from simpleList<T>. BinhexDumpWnd, the main window of the Tab, owns the collections of meta objects, and uses _persistMetafile_ to persist them across processes of the Tab.
+
+```C++
+class CRegionCollection : public simpleList<DUMPREGIONINFO> {...};
+class AnnotationCollection : public simpleList<DUMPANNOTATIONINFO> {...};
+class GShapeCollection : public simpleList<DUMPSHAPEINFO> {...};
+
+class BinhexMetaView : public BinhexView, public ROFile
+{
+public:
+	...
+	CRegionCollection _regions;
+	AnnotationCollection _annotations;
+	GShapeCollection _shapes;
+	...
+};
+
+class BinhexDumpWnd : public _ChildWindow, public BinhexMetaView { ... };
+```
+
 #### Tag Scan
+
+  * Image support (_classes ScanTagJpg, ScanTagPng, ScanTagGif, ScanTagBmp, ScanTagIco_)
+  * Text support (_class ScanTagBOM_)
+  * Metadata parser (_classes MetadataExif, MetadataXMP, MetadataICCP, MetadataPhotoshop_)
+  * Scan server API (_class ScanTagExt, ScanDataImpl, interfaces IHexDumpScanSite, IHexDumpScanData_)
+
 
 #### Utility
 
