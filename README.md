@@ -315,17 +315,18 @@ What about other image types? What about non-image files? To address such needs,
 The Tab uses implements a scan server hosting site in class ScanTagExt. _OnScanTagStart_ calls the static _ScanTagExt::CanScanFile_ method to determine if there is an external scan server ready for the input file. If there is, the method runs an instance of _ScanTagExt_. _ScanTagExt::runInternal_ instantiates the server, and initializes the server passing an _IHexDumpScanSite_ object (actually, _this_ of the _ScanTagExt_ instance) and an _IHexDumpScanData_ object. Scan servers use methods on _IHexDumpScanSite_ to access host services and methods on _IHexDumpScanData_ to access data of the source file being scanned.
 
 
-#### Utility
-
-
-
 ### HEXDUMPDLG Viewer Application
+	
+This component project builds a standalone propsheet viewer, an alternative to _Explorer's File Properties_. It features a wide hex-dump format and an easy-to-use command tool bar. The viewer may be started from the _Windows Start_ menu. Open the _Maximilian's Tools_ popup and select _Hex-Dump Viewer_.
+	
+The viewer consists of these components.
 
-* Command line parser
+* Command line parser (function parseCommandline)
 * Window management
-	* Propsheet hosting
-	* Toolbar management
-* Communication with the tab
+	* Propsheet hosting (class PropsheetDlg)
+	* Toolbar management (class ToolbarWindow)
+* Communication with the tab (interfaces IShellPropSheetExt and IHexDumpConfig)
+
 
 ### ScanSrvWebP Demo Scan Server
 
