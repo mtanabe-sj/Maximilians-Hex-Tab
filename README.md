@@ -400,7 +400,7 @@ DECLARE_INTERFACE_(IHexDumpScanSite, IUnknown)
 };
 ```
 
-The Tab calls Init to initialize the scan server, Scan to start a tag scan, and Term to terminate the server. If it receives a fail code from the methods, the Tab calls GetErrorMessage to retrieve a corresponding error message.
+The Tab calls _Init_ to initialize the scan server, _Scan_ to start a tag scan, and _Term_ to terminate the server. If it receives a fail code from the methods, the Tab calls _GetErrorMessage_ to retrieve a corresponding error message.
 	
 ```C++
 DECLARE_INTERFACE_(IHexDumpScanServer, IUnknown)
@@ -413,6 +413,88 @@ DECLARE_INTERFACE_(IHexDumpScanServer, IUnknown)
 };
 ```
 
+Let's examine how the demo project implements a scan server. The Tab communicates with a scan server through the latter's IHexDumpScanServer interface. The project defines class _ScanServerImpl_ to expose IHexDumpScanServer. The Tab manages the life of an instance of the scan server using the _Init_ and _Term_ interface methods of the class.
+
+```C++
+class ScanServerImpl :
+	public IUnknownImpl<IHexDumpScanServer, &IID_IHexDumpScanServer>
+{
+public:
+	// IHexDumpScanServer methods
+	STDMETHOD(Init)(IHexDumpScanSite *ScanSite, IHexDumpScanData *SourceData);
+	STDMETHOD(Term)();
+	STDMETHOD(Scan)();
+	STDMETHOD(GetErrorMessage) (BSTR *Message);
+
+protected:
+	AutoComRel<IHexDumpScanSite> _site;
+	AutoComRel<IHexDumpScanData> _data;
+	bstring _msg;
+
+	struct CHUNK_RIFF
+	{
+		FOURCC ChunkId;
+		DWORD ChunkSize;
+		BYTE Payload[1];
+	};
+	...
+};
+```
+
+The class defines _AutoComRel_ smart pointers as member objects to maintain references on a scan site interface and scan data interface that are passed in when the Tab calls its _Init_ method. The interfaces are released when the _Term_ method is called.
+
+```C++
+STDMETHODIMP ScanServerImpl::Init(IHexDumpScanSite *ScanSite, IHexDumpScanData *SourceData)
+{
+	_site = ScanSite;
+	_data = SourceData;
+	return S_OK;
+}
+
+STDMETHODIMP ScanServerImpl::Term()
+{
+	_site.release();
+	_data.release();
+	return S_OK;
+}
+```
+
+The Tab calls interface method _Scan_ to run a scan for tags. The method blocks. It does not return until the job complete. This is not a problem for the Tab since the latter runs the scan operation in a worker thread. The demo shows how to use the data interface to seek and read source bytes from the input file and use the site interface to generate and attach tags to specific data locations. Below is a rendition of _Scan_ abridged for brevity's sake. If _Scan_ returns a failure value, the Tab comes back and calls _GetErrorMessage_ for a descriptive error phrase that can be shown to alert the user.
+
+```C++
+STDMETHODIMP ScanServerImpl::Scan()
+{
+	CHUNK_HEADER hdr;
+	ULONG len = sizeof(hdr);
+	HRESULT hr = _data->Read(&hdr, &len);
+	...
+	LARGE_INTEGER offset = { 0 };
+	short tagIndex;
+	hr = _site->TagData(0, offset.QuadPart, len, bstring(L"WebP header"), 0, &tagIndex);
+
+	offset.QuadPart += len;
+
+	CHUNK_RIFF chunk;
+	len = FIELD_OFFSET(CHUNK_RIFF, Payload);
+	while (S_OK == (hr = _data->Read(&chunk, &len)))
+	{
+		hr = _site->TagData(0, offset.QuadPart, FIELD_OFFSET(CHUNK_RIFF, Payload), bstring(L"Next Chunk"), 0, &tagIndex);
+		seekLen = (LONG)chunk.ChunkSize;
+
+		if (seekLen)
+			hr = _data->Seek(seekLen, SSEEK_ORIGIN_CUR);
+
+		offset.QuadPart += FIELD_OFFSET(CHUNK_RIFF, Payload) + chunk.ChunkSize;
+	}
+	return hr;
+}
+
+STDMETHODIMP ScanServerImpl::GetErrorMessage(BSTR *Message)
+{
+	*Message = SysAllocString(_msg);
+	return S_OK;
+}
+```
 
 ## Contributing
 
