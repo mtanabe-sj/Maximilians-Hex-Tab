@@ -459,7 +459,7 @@ STDMETHODIMP ScanServerImpl::Term()
 }
 ```
 
-The Tab calls interface method _Scan_ to run a scan for tags. The method blocks. It does not return until the job complete. This is not a problem for the Tab since the latter runs the scan operation in a worker thread. The demo shows how to use the data interface to seek and read source bytes from the input file and use the site interface to generate and attach tags to specific data locations. Below is a rendition of _Scan_ abridged for brevity's sake. If _Scan_ returns a failure value, the Tab comes back and calls _GetErrorMessage_ for a descriptive error phrase that can be shown to alert the user.
+The Tab calls interface method _Scan_ to run a scan for tags. The method blocks. It does not return until the job complete. This is not a problem for the Tab since the latter runs the scan operation in a worker thread. The demo shows how to use the data interface to seek and read source bytes from the input file and use the site interface to generate and attach tags to specific data locations. Below is a rendition of _Scan_ abridged for readability's sake. If _Scan_ returns a failure value, the Tab comes back to the interface and calls _GetErrorMessage_ for a descriptive error phrase so that it can alert the user.
 
 ```C++
 STDMETHODIMP ScanServerImpl::Scan()
