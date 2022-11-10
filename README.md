@@ -496,6 +496,8 @@ STDMETHODIMP ScanServerImpl::GetErrorMessage(BSTR *Message)
 }
 ```
 
+A scan server can use method _IHexDumpScanSite::Annotate_ to annotate a data byte with descriptive text or a bitmap image. The demo uses the method to attach a WebP logo image to the _WebP Header_ structure.
+
 
 ## Contributing
 
