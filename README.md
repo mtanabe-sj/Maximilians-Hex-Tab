@@ -413,7 +413,7 @@ DECLARE_INTERFACE_(IHexDumpScanServer, IUnknown)
 };
 ```
 
-Let's examine how the demo project implements a scan server. The Tab communicates with a scan server through the latter's IHexDumpScanServer interface. The project defines class _ScanServerImpl_ to expose IHexDumpScanServer. The Tab manages the life of an instance of the scan server using the _Init_ and _Term_ interface methods of the class.
+Let's examine how the demo project implements a scan server. The Tab communicates with a scan server through the latter's IHexDumpScanServer interface. The project defines class _ScanServerImpl_ to expose IHexDumpScanServer. Note that the Tab can release the server interface any time after it calls the server's _Term_ method.
 
 ```C++
 class ScanServerImpl :
@@ -441,7 +441,7 @@ protected:
 };
 ```
 
-The class defines _AutoComRel_ smart pointers as member objects to maintain references on a scan site interface and scan data interface that are passed in when the Tab calls its _Init_ method. The interfaces are released when the _Term_ method is called.
+The class defines _AutoComRel_ smart pointers as member objects to maintain references on a scan site interface and scan data interface that are passed in when the Tab calls its _Init_ method. The interfaces are released when the _Term_ method is called. The class also defines a BSTR wrapper object _msg_ to hold an error phrase to be set by _Scan_ if the scan operation fails.
 
 ```C++
 STDMETHODIMP ScanServerImpl::Init(IHexDumpScanSite *ScanSite, IHexDumpScanData *SourceData)
@@ -495,6 +495,7 @@ STDMETHODIMP ScanServerImpl::GetErrorMessage(BSTR *Message)
 	return S_OK;
 }
 ```
+
 
 ## Contributing
 
