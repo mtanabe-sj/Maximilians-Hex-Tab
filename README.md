@@ -4,7 +4,7 @@ Maximilian's File Hex-Dump Tab is a Windows Explorer add-on written in C++. The 
 
 ## Features
 
-Let's give you a functional overview first. Hopefull you develop a good idea on what the Tab can do. Later on, we will get to more technical stuff.
+Let's give you a functional overview first. Hopefully you develop a good idea on what the Tab can do. Later on, we will get to more technical stuff.
 
 ### At a Glance
 
