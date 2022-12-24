@@ -1,10 +1,10 @@
 # Maximilian's File Hex-Dump Tab for Windows Explorer
 
-Maximilian's File Hex-Dump Tab is a Windows Explorer add-on written in C++. The Tab is much more than a simple dump utility. With it, not only can you quickly inspect the binary content of any file directly in Windows Explorer, you can also easily annotate, color and circle parts of the file data meaningful to you. For image files like JPEG, the Tab can scan the entire file, and automatically tag well-known data segments and structures. If you want, you can help us extend the Tab's scan and tag feature to other file types by writing a scan server. Refer to the demo project for how. The Tab is a full-featured Windows app. After the file is marked and commented, tell the Tab to send it to a printer for a paper printout, or save it as a bitmap image file on the disk. Or, copy and paste it to a report you are writing. The convenience features are only a click away.
+Maximilian's File Hex-Dump Tab is a Windows Explorer add-on written in C++. The Tab is much more than a simple hex-dump utility. With it, not only can you quickly inspect the binary content of any file directly in Windows Explorer, you can also easily annotate, color and circle parts of the file data meaningful to you. For image files like JPEG, the Tab can scan the entire file, and automatically tag well-known data segments and structures. If you want, you can help us extend the Tab's scan and tag feature to other file types by writing a scan server. Refer to the demo project on how. The Tab is a full-featured Windows app. After you are done marking places and annotating, tell the Tab to send it to a printer for a printout, or save it as an image file on the disk. Or, tell the Tab to copy it to the clipboard. You can then paste it to, e.g., a report you are writing. These convenience features are only a click away.
 
 ## Features
 
-Let's give you a functional overview first. Hopefully you develop a good idea on what the Tab can do. Later on, we will get to more technical stuff.
+Let's give you a functional overview first. Hopefully you will develop a good idea on what the Tab can do. Later, we will get to more interesting technical stuff.
 
 ### At a Glance
 
@@ -34,13 +34,13 @@ Let's give you a functional overview first. Hopefully you develop a good idea on
 
 ### Windows Explorer Integration
 
-The Tab is an add-on for Windows Explorer, which makes its hex-dump service easily accessible to users of Explorer. To see the Tab in action, open a folder window, select a file you want to examine. Open File Properties from the context menu. Hit the Hex Dump tab. Want to jump to hex digits you know? Use `Find Data` to search and be taken there. Want to know which pair of hex digits corresponds to an ASCII character in the right-hand column? Just click on the character. A red box is drawn to highlight the digit pair in the hex-dump area.
+The Tab is an add-on for Windows Explorer, which makes its hex-dump service easily accessible to users of Explorer. To see the Tab in action, open a folder window, select a file you want to examine. Open File Properties from the context menu. Hit the Hex Dump tab. Want to jump to data bytes you already know? Use `Find Data` to search and be taken there. Want to know which hex digit pair corresponds to an ASCII character in the right-hand text-dump column? Just click on the ASCII character. A red rectangle is drawn to highlight a digit pair in the hex-dump area that corresponds to the selected character.
 
 ![alt Tab view - circle color and annotate](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/tab%20view%20-%20circle%2C%20color%20and%20annotate.png)
 
-The Tab shows the file offset in the left-hand column, the hex digits of source bytes in the middle column, and the source bytes as ASCII characters in the right-hand column. If the file has text encoded in Unicode or UTF-8, run a scan. The Tab shows the text as Unicode characters in the right-hand column, instead.
+The Tab display consists of three columnar areas, a left-hand column for showing the file offset, a middle column for showing hex digits of file data bytes, and a right-hand column showing the same data bytes as ASCII characters. If the file has text encoded in Unicode or UTF-8, run a scan. The Tab displays the decoded Unicode characters in the right-hand column. Without a scan, the text would be shown as if it were in ASCII and end up looking garbled. Tha might not be meaningful.
 
-Is the default 8-byte-per-row output format too small? Use menu command `Open in New Window` to open the file in a separate window with a larger display and show the hex output in a 16-byte-per-row format. The larger window comes with a tool bar of command buttons for your convenience, too.
+Is the default 8-byte-per-row output format too small? Use menu command `Open in New Window`. The file is re-opened in a separate window with a larger display area capable of listing 16 bytes per dump line. The larger window comes with a tool bar of command buttons for quick access.
 
 ![alt Tab view - wide display](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/standalone%20tab.png)
 
