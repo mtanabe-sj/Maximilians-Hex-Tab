@@ -44,37 +44,37 @@ Is the default 8-byte-per-row output format too small? Use menu command `Open in
 
 ![alt Tab view - wide display](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/standalone%20tab.png)
 
-To search by keyword, use menu command `Find`. Type a keyword as a binary sequence or character string (UTF-8 or Unicode).
+To search by keyword, use menu command `Find`. Type a keyword either as a binary sequence or character string (UTF-8 or Unicode).
 
 ![alt Find data](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/find%20data.png)
 
 ### Colors, Tags and Shapes to Mark Data Blocks
 
-Suppose you find interesting bytes in the hex output, and want to highlight. But how? Easy. Click on the starting byte, and drag to extend the selection of byte range. The bytes are automatically filled with color. Next, add a note of description. Need a picture with the note? No problem. Copy the source image onto the clipboard. Then, just paste it into the note. Want to circle the range? Or, underline it with a wavy line? With the Tab, you can do them, too. They are on the Shape menu. Is the circle (more like an ellipse) too small? Stretch it to cover all of the interesting bytes. If you need to, you can rotate the shape, too. Choose Apply or OK to keep the tags and shapes you added. Next time the file in opened for properties, they are automatically pulled up and shown.
+Suppose you find interesting data bytes in the hex output, and want to highlight them. But how? Easy. Click on the starting byte, and drag to extend the selected byte range. The range is automatically given a color. Next, add a note to describe what the data is or what it means to you. Need to attach a picture to the note? No problem. Copy the picture onto the clipboard. Then, just go back to the note in Tab and hit the Ctrl-V or Shift-Insert keys. The picture should appear below the note. Want to circle the range? Or, underline it with a wavy line? With Tab, you can do them easily. Right click where you want the graphical shape to be drawn. Open the Shape menu and select a type. A shape should appear. You can use the mouse cursor to stretch it to a desired size or move it to a desired location. Is the circle (really an ellipse) too small? Stretch it to cover all of your interesting bytes. If you need to, you can rotate the shape, too. Move the cursor into the shape by a quarter length. The cursor turns into a rotation indicator. Hold down the mouse button and move the cursor up to rotate counterclockwise or down to rotate clockwise. Release the button to finalize the shape. Choose Apply or OK to keep the tags and shapes you have added. Next time the file is opened for properties, they are automatically pulled up and shown.
 
-A keyboard person might prefer menu command `Add Tag` to the mouse method, and supply a byte range and a comment.
+A keyboard person might prefer menu command `Add Tag` to the mouse method. You will be asked to supply a byte range and a comment.
 
 ![alt Add tag](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/add%20tag.png)
 
-Note that colored regions, notes, and shapes are referred to as `meta` objects in the Tab project.
+Note that colored regions, attached notes, and drawn shapes are referred to as `meta` objects in Tab's programming.
 
 ### Scan for Tags
 
-The Tab has built-in support for detecting documented segments and structures of image data and automatically placing tags with descriptive information.
+The Tab has built-in support for detecting documented segments and structures of image data and automatically generating tags with descriptive information.
 
 ![alt Tab view after jpeg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/tab%20after%20jpeg%20scan.png)
 
 The file types the Tab can scan are __jpeg__, __jpg__, __png__, __bmp__, __gif__, __ico__, and __webp__.
 
-The Tab provides an API for extending scan to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project [ScanSrvWebp](#ScanSrvWebP-Demo-Scan-Server) for the API details.
+The Tab provides an API for extending the scan capability to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project [ScanSrvWebp](#ScanSrvWebP-Demo-Scan-Server) for the API details.
 
 ### Print, Copy, or Save
 
-To send the hex output to a printer, use `Print`. Choose a printer from the list. Set the range of pages. If the output is too crowded with tags making it difficult to distinguish one pair of hex digits from others, know you have an option of grouping the tags in a column. That may give you a clarity you need. Use the Fit option to squeeze the hex output to fit the paper.
+To send the hex output to a printer, use `Print`. Choose a printer from the list. Set the range of pages. If the output is overcrowded with tags making it difficult to see the data bytes, know that you have an option of grouping the tags in a column outside the data area. That may give you just a clarity you need. Also, you can use the Fit option to squeeze the hex output to fit the paper.
 
 ![alt Print page setup](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/print%20page%20setup.png)
 
-Want to add the hex output to a document? Use `Save As Image`. The menu command lets you copy it to the system clipboard. Paste it directly into your document. Or if you want it on a disk, you can save it as a PNG or BMP file, too.
+Want to add the hex output to a document you are writing? Use `Save As Image`. The menu command sends the hex dump to the system clipboard as an image object. You can paste it directly into your document. Or if you want it on a disk, you can save it as a PNG or BMP file, too.
 
 ![alt Save hexdump](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/save%20hexdump.png)
 
