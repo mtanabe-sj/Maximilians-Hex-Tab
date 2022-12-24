@@ -36,17 +36,17 @@ Let's give you a functional overview first. Hopefully you will develop a good id
 
 The Tab is an add-on for Windows Explorer, which makes its hex-dump utility easily accessible to users of Explorer. To see the Tab in action, open a folder window, select a file you want to examine. Open File Properties from the context menu. Hit the Hex Dump tab. Want to jump to data bytes you already know? Use `Find Data` to search and be taken there. Want to know which hex digit pair corresponds to an ASCII character in the right-hand text-dump column? Just click on the ASCII character. A red rectangle is drawn to highlight a digit pair in the hex-dump area that corresponds to the selected character.
 
-![alt Tab view - circle color and annotate](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/tab%20view%20-%20circle%2C%20color%20and%20annotate.png)
+![alt Tab view - circle color and annotate](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/tab%20view%20-%20circle%2C%20color%20and%20annotate.png)
 
 The Tab display consists of three columnar areas, a left-hand column for showing the file offset, a middle column for showing hex digits of file data bytes, and a right-hand column showing the same data bytes as ASCII characters. If the file has text encoded in Unicode or UTF-8, run a scan. The Tab displays the decoded Unicode characters in the right-hand column. Without a scan, the text would be shown as if it were in ASCII and end up looking garbled. Tha might not be meaningful.
 
 Is the default 8-byte-per-row output format too small? Use menu command `Open in New Window`. The file is re-opened in a separate window with a larger display area capable of listing 16 bytes per dump line. The larger window comes with a tool bar of command buttons for quick access.
 
-![alt Tab view - wide display](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/standalone%20tab.png)
+![alt Tab view - wide display](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/standalone%20tab.png)
 
 To search by keyword, use menu command `Find`. Type a keyword either as a binary sequence or character string (UTF-8 or Unicode).
 
-![alt Find data](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/find%20data.png)
+![alt Find data](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/find%20data.png)
 
 ### Colors, Tags and Shapes to Mark Data Blocks
 
@@ -54,7 +54,7 @@ Suppose you find interesting data bytes in the hex output, and want to highlight
 
 A keyboard person might prefer menu command `Add Tag` to the mouse method. You will be asked to supply a byte range and a comment.
 
-![alt Add tag](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/add%20tag.png)
+![alt Add tag](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/add%20tag.png)
 
 Note that colored regions, attached notes, and drawn shapes are referred to as `meta` objects in Tab's programming.
 
@@ -62,7 +62,7 @@ Note that colored regions, attached notes, and drawn shapes are referred to as `
 
 The Tab has built-in support for detecting documented segments and structures of image data and automatically generating tags with descriptive information.
 
-![alt Tab view after jpeg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/tab%20after%20jpeg%20scan.png)
+![alt Tab view after jpeg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/tab%20after%20jpeg%20scan.png)
 
 The file types the Tab can scan are __jpeg__, __jpg__, __png__, __bmp__, __gif__, __ico__, and __webp__.
 
@@ -72,17 +72,17 @@ The Tab provides an API for extending the scan capability to other file types. T
 
 To send the hex output to a printer, use `Print`. Choose a printer from the list. Set the range of pages. If the output is overcrowded with tags making it difficult to see the data bytes, know that you have an option of grouping the tags in a column outside the data area. That may give you just a clarity you need. Also, you can use the Fit option to squeeze the hex output to fit the paper.
 
-![alt Print page setup](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/print%20page%20setup.png)
+![alt Print page setup](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/print%20page%20setup.png)
 
 Want to insert hex output into a document you are writing? Use `Save As Image`. The menu command sends the hex dump to the system clipboard as an image object. You can paste it directly into your document. Or if you want it on a disk, you can save it as a PNG or BMP file, too.
 
-![alt Save hexdump](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/save%20hexdump.png)
+![alt Save hexdump](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/save%20hexdump.png)
 
 ### Standalone Viewer App
 
 The window frame of Explorer's File Properties tends to be small. So, the Tab can only get a limited display area, and a view that it generates tends to be short and narrow. By default, the Tab outputs the hex digits in an 8-bytes-per-row format. Although it can be reconfigured to output more bytes per row, you'd need to either use the scrollbar or choose a smaller font to see all parts of the view. The Tab gives you an alternative. You can run it as a  standalone viewer outside of Windows Explorer. Free from space constraint, the Tab runs in a much larger window frame, now able to output 16 or even 32 data bytes per row. To put it in wide-view mode, select `Open in New Window` from the context menu. Wide view defaults to a 16-bytes-per-row format. If you need to see even more bytes, choose the alternative 32-byte format. Aside from the larger display, the standalone viewer sports a toolbar. Use it to quickly access main features of the Tab.
 
-![alt Tab after jpg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/standalone%20tab%20after%20jpg%20scan.png)
+![alt Tab after jpg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/standalone%20tab%20after%20jpg%20scan.png)
 
 Actually, the Tab can be launched from the Windows Start menu. Go to `Maximilian's Tools`. Select View File Hex-Dump. When prompted, choose a file you want to examine. The file's data is output in a wide format.
 
@@ -113,13 +113,13 @@ To build the installer, install [`Maximilian's Automation Utility`](https://gith
 
 ## Design and Implementation
 
-### HEXDUMPTAB Shell Propertysheet Extention DLL
+### HEXTAB Shell Propertysheet Extention DLL
 
 This is the main component project. It builds the Tab shell extension. The Tab consists of the components below with the C++ class or COM interface associations noted in parantheses.
 
 * Communication with the host (_class PropsheetExtImpl_)
   * Propsheet extension (_interface IShellPropSheetExt_)
-  * Custom host configuration (_interface IHexDumpConfig_)
+  * Custom host configuration (_interface IHexTabConfig_)
 * View generation (_class BinhexView_)
 * UI management and command invocation (_class BinhexDumpWnd_)
   * Thread local storage (_class TLSData_)
@@ -139,7 +139,7 @@ This is the main component project. It builds the Tab shell extension. The Tab c
   * Image support (_classes ScanTagJpg, ScanTagPng, ScanTagGif, ScanTagBmp, ScanTagIco_)
   * Text support (_class ScanTagBOM_)
   * Metadata parser (_classes MetadataExif, MetadataXMP, MetadataICCP, MetadataPhotoshop_)
-  * Scan server API (_class ScanTagExt, ScanDataImpl, interfaces IHexDumpScanSite, IHexDumpScanData_)
+  * Scan server API (_class ScanTagExt, ScanDataImpl, interfaces IHexTabScanSite, IHexTabScanData_)
 * Utility
   * Codec wrapper (_classes CodecImage, BitmapImage_)
   * String manipulation (_classes ustring, astring, bstring_)
@@ -157,9 +157,9 @@ struct DUMPANNOTATIONINFO { WCHAR Text[256]; WCHAR TextEnd; BYTE Flags; ...; HBI
 struct DUMPSHAPEINFO { BYTE Shape; BYTE Flags; USHORT StrokeThickness; ...; COLORREF InteriorColor; };
 ```
 
-See _persistMetafile::save_ on how meta objects are serialized. This takes place when the OK or Apply button is selected. Loading or de-serialization of persisted meta objects happens automatically next time the Tab is opened for the same file. See the _persistMetafile::load_ method. A meta file that stores serialized meta objects is located in a subfolder of the per-user folder of _%LocalAppData%_. How does the load method know which meta file to read? The _save_ method generates a unique ID naming the meta file after it, and writes a named setting with the dumped file as the name and the meta file ID as the value in a per-user key of the system registry. The _load_ method makes a lookup for the dumped file in the registry and retrieves the meta file ID. Based on the file ID, it locates the meta file and de-serializes and loads the meta objects. The registry key that maintains the meta file mapping is HKEY_CURRENT_USER\SOFTWARE\mtanabe\HexDumpTab\MetaFiles. Entries in the key look like this.
+See _persistMetafile::save_ on how meta objects are serialized. This takes place when the OK or Apply button is selected. Loading or de-serialization of persisted meta objects happens automatically next time the Tab is opened for the same file. See the _persistMetafile::load_ method. A meta file that stores serialized meta objects is located in a subfolder of the per-user folder of _%LocalAppData%_. How does the load method know which meta file to read? The _save_ method generates a unique ID naming the meta file after it, and writes a named setting with the dumped file as the name and the meta file ID as the value in a per-user key of the system registry. The _load_ method makes a lookup for the dumped file in the registry and retrieves the meta file ID. Based on the file ID, it locates the meta file and de-serializes and loads the meta objects. The registry key that maintains the meta file mapping is HKEY_CURRENT_USER\SOFTWARE\mtanabe\HexTab\MetaFiles. Entries in the key look like this.
 
-![alt Metafiles registry key](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/metafiles%20registry%20key.png)
+![alt Metafiles registry key](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/metafiles%20registry%20key.png)
 
 #### View Generation
 
@@ -179,14 +179,14 @@ There are basically three sources of commands and messages that require Tab's at
 
 OnContextMenu of BinhexDumpWnd prepares and runs a context menu on detecting a right-click. Depending on the type of an item clicked, some menu commands are either grayed out or removed. But, all instances of context menu derive from a single MENU resource definition (_IDR_VIEWPOPUP_). Here is an example menu enabling a color chooser submenu in response to a click on a colored region.
 
-![alt Context menu](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/context%20menu.png)
+![alt Context menu](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/context%20menu.png)
 
 The menu commands and how they are processed are summarized below.
 
 |Menu label|Command ID|Handler|Remarks|
 |----------------------|----------------------|----------------------|---------------------------------------------------|
-|Open in New Window|IDM_OPEN_NEW_WINDOW|OnOpenNewWindow|HEXDUMPDLG viewer app is run. Removed in HEXDUMPDLG.|
-|Bytes per Line|IDM_BPL_(N)|OnSelectBPR(N)|IDM_BPL_8 and accompanying IDM_SAME_FONTSIZE are grayed in HEXDUMPDLG.|
+|Open in New Window|IDM_OPEN_NEW_WINDOW|OnOpenNewWindow|HEXDLG viewer app is run. Removed in HEXDLG.|
+|Bytes per Line|IDM_BPL_(N)|OnSelectBPR(N)|IDM_BPL_8 and accompanying IDM_SAME_FONTSIZE are grayed in HEXDLG.|
 |Add Tag|IDM_ADD_TAG|OnAddTag|To be followed by parameter fill in dialog of AddTagDlg.|
 |Add Note|IDM_ANNOTATE|OnAnnotate|addAnnotation of AnnotationCollection shows an empty note for user to fill.|
 |Remove|IDM_REMOVE|OnRemoveMetadata|grayed out if no meta object is selected; method removeHere of CRegionCollection, AnnotationCollection, or GShapeCollection is called for actual removal.|
@@ -315,7 +315,7 @@ What about other image types? What about non-image files? To address such needs,
 The Tab uses implements a scan server hosting site in class ScanTagExt. _OnScanTagStart_ calls the static _ScanTagExt::CanScanFile_ method to determine if there is an external scan server ready for the input file. If there is, the method runs an instance of _ScanTagExt_. _ScanTagExt::runInternal_ instantiates the server, and initializes the server passing an _IHexDumpScanSite_ object (actually, _this_ of the _ScanTagExt_ instance) and an _IHexDumpScanData_ object. Scan servers use methods on _IHexDumpScanSite_ to access host services and methods on _IHexDumpScanData_ to access data of the source file being scanned.
 
 
-### HEXDUMPDLG Viewer Application
+### HEXDLG Viewer Application
 	
 This component project builds a standalone propsheet viewer, an alternative to _Explorer's File Properties_. It features a wide hex-dump format and an easy-to-use command tool bar. The viewer may be started from the _Windows Start_ menu. Open the _Maximilian's Tools_ popup and select _Hex-Dump Viewer_.
 	
@@ -327,7 +327,7 @@ The viewer consists of these components.
 	* Toolbar management (class ToolbarWindow)
 * Communication with the tab (interfaces IShellPropSheetExt and IHexDumpConfig)
 
-If you are interested in how Explorer loads a propsheet extension, check out _PropsheetDlg::createShellPropsheetExt_. The viewer app uses the customization interface IHexDumpConfig to configure its tool bar with private information from the Tab.
+If you are interested in how Explorer loads a propsheet extension, check out _PropsheetDlg::createShellPropsheetExt_. The viewer app uses the customization interface IHexTabConfig to configure its tool bar with private information from the Tab.
 
 
 ### ScanSrvWebP Demo Scan Server
@@ -349,7 +349,7 @@ In terms of data structure, WebP is much like PNG. It's composed with well-defin
 
 Since a scan server is a COM server, standard registration with COM is made in key HKCR\CLSID\{Server-CLSID}. The demo server has a CLSID of {6ccda86f-3c63-11ed-9d82-00155d938f70}.
 
-![alt Scan server clsid registration](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/scan%20server%20clsid%20registration.png)
+![alt Scan server clsid registration](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/scan%20server%20clsid%20registration.png)
 	
 To let the Tab know the server's availability, the scan server makes these settings under HKLM.
 ScanServers: .webp --> {Server-CLSID}
@@ -357,24 +357,24 @@ ExtGroups: .webp --> image
 
 The above configuration settings instruct the Tab to deploy the server if the file has an extension of .webp and find the COM server at the specified CLSID. When it runs a File Open dialog, the Tab adds the extension name (.webp) from the registry key to the file extensions of the _image_ group so that if the user restricts file listing to images, files of .webp are listed as well.
 
-![alt Scan server registration](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/scan%20server%20registration.png)
+![alt Scan server registration](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/scan%20server%20registration.png)
 
-![alt Scan server ext-group registration](https://github.com/mtanabe-sj/Maximilians-Hex-Dump-Tab/blob/main/ref/scan%20server%20ext-group%20registration.png)
+![alt Scan server ext-group registration](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/scan%20server%20ext-group%20registration.png)
 	
 #### Interface Implementation
 
 The Tab defines three interfaces, one for a scan server, one for a scan site, and the other for a scan data. The scan server interface is implemented and exposed by a scan server. The Tab which is a client of the scan server hosts the server and invokes the server's scan function through the interface.
 	
-* IHexDumpScanServer
-* IHexDumpScanSite
-* IHexDumpScanData
+* IHexTabScanServer
+* IHexTabScanSite
+* IHexTabScanData
 
-Scan servers implement the scan server interface IHexDumpScanServer. The Tab implements the other two. Scan servers use the data interface to read and search the file data. Servers can also use it to ask the Tab to parse metadata on its behalf.
+Scan servers implement the scan server interface IHexTabScanServer. The Tab implements the other two. Scan servers use the data interface to read and search the file data. Servers can also use it to ask the Tab to parse metadata on its behalf.
 
 A scan server may want to access services of the Tab as well as attributes of the dump file. It can do so through the scan site interface. The Tab implements the site interface on its _ScanTagExt_ object. It passes a pointer to the interface to the server when it calls the server's Init method to give the server a chance to initialize itself based on the file attributes available from the data and site interfaces the server receives.
 
 ```C++
-DECLARE_INTERFACE_(IHexDumpScanData, IUnknown)
+DECLARE_INTERFACE_(IHexTabScanData, IUnknown)
 {
 	...
 	STDMETHOD(GetFileSize) (THIS_ LONGLONG *SizeInBytes) PURE;
@@ -389,7 +389,7 @@ DECLARE_INTERFACE_(IHexDumpScanData, IUnknown)
 The server uses methods TagData and Annotate of the site interface to mark a block of scanned data as a colored region with a description, and attach a descriptive note or bitmap image to a data byte, respectively.
 	
 ```C++
-DECLARE_INTERFACE_(IHexDumpScanSite, IUnknown)
+DECLARE_INTERFACE_(IHexTabScanSite, IUnknown)
 {
 	...
 	STDMETHOD(GetVersion)(THIS_ ULONG *SiteVersion) PURE;
@@ -403,10 +403,10 @@ DECLARE_INTERFACE_(IHexDumpScanSite, IUnknown)
 The Tab calls _Init_ to initialize the scan server, _Scan_ to start a tag scan, and _Term_ to terminate the server. If it receives a fail code from the methods, the Tab calls _GetErrorMessage_ to retrieve a corresponding error message.
 	
 ```C++
-DECLARE_INTERFACE_(IHexDumpScanServer, IUnknown)
+DECLARE_INTERFACE_(IHexTabScanServer, IUnknown)
 {
 	...
-	STDMETHOD(Init) (THIS_ IHexDumpScanSite *ScanSite, IHexDumpScanData *SourceData) PURE;
+	STDMETHOD(Init) (THIS_ IHexTabScanSite *ScanSite, IHexTabScanData *SourceData) PURE;
 	STDMETHOD(Term) (THIS) PURE;
 	STDMETHOD(Scan) (THIS) PURE;
 	STDMETHOD(GetErrorMessage) (THIS_ BSTR *Message) PURE;
@@ -417,18 +417,18 @@ Let's examine how the demo project implements a scan server. The Tab communicate
 
 ```C++
 class ScanServerImpl :
-	public IUnknownImpl<IHexDumpScanServer, &IID_IHexDumpScanServer>
+	public IUnknownImpl<IHexTabScanServer, &IID_IHexTabScanServer>
 {
 public:
 	// IHexDumpScanServer methods
-	STDMETHOD(Init)(IHexDumpScanSite *ScanSite, IHexDumpScanData *SourceData);
+	STDMETHOD(Init)(IHexTabScanSite *ScanSite, IHexTabScanData *SourceData);
 	STDMETHOD(Term)();
 	STDMETHOD(Scan)();
 	STDMETHOD(GetErrorMessage) (BSTR *Message);
 
 protected:
-	AutoComRel<IHexDumpScanSite> _site;
-	AutoComRel<IHexDumpScanData> _data;
+	AutoComRel<IHexTabScanSite> _site;
+	AutoComRel<IHexTabScanData> _data;
 	bstring _msg;
 
 	struct CHUNK_RIFF
@@ -444,7 +444,7 @@ protected:
 The class defines _AutoComRel_ smart pointers as member objects to maintain references on a scan site interface and scan data interface that are passed in when the Tab calls its _Init_ method. The interfaces are released when the _Term_ method is called. The class also defines a BSTR wrapper object _msg_ to hold an error phrase to be set by _Scan_ if the scan operation fails.
 
 ```C++
-STDMETHODIMP ScanServerImpl::Init(IHexDumpScanSite *ScanSite, IHexDumpScanData *SourceData)
+STDMETHODIMP ScanServerImpl::Init(IHexTabScanSite *ScanSite, IHexTabScanData *SourceData)
 {
 	_site = ScanSite;
 	_data = SourceData;
@@ -496,7 +496,7 @@ STDMETHODIMP ScanServerImpl::GetErrorMessage(BSTR *Message)
 }
 ```
 
-A scan server can use method _IHexDumpScanSite::Annotate_ to annotate a data byte with descriptive text or a bitmap image. The demo uses the method to attach a WebP logo image to the _WebP Header_ structure.
+A scan server can use method _IHexTabScanSite::Annotate_ to annotate a data byte with descriptive text or a bitmap image. The demo uses the method to attach a WebP logo image to the _WebP Header_ structure.
 
 
 ## Contributing
@@ -508,5 +508,5 @@ Bug reports and enhancement requests are welcome.
 
 Copyright (c) mtanabe, All rights reserved.
 
-Maximilian's File Hex-Dump Tab is distributed under the terms of the MIT License.
+Maximilian's File Hex Tab is distributed under the terms of the MIT License.
 The libheic and associated libraries are distributed under the terms of the GNU license.
