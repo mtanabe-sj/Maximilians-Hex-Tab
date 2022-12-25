@@ -282,12 +282,13 @@ int HexdumpPrintJob::_getAscColCoord(int colPos)
 #### Meta Object Management
 
 Meta objects refer to the following constructs:
-o data range definitions called colored regions,
-o annotations attached to specific data bytes, and
-o graphical shapes attached to specific data bytes.
-These objects are created and managed by the Tab. They are stored in a data file managed by _persistMetafile_. The Tab uses the term Tag to refer to a colored region with an annotation.
+* data range definitions called colored regions,
+* annotations attached to specific data bytes, and
+* graphical shapes attached to specific data bytes.
 
-The meta objects are managed by the three collection classes which all derive from simpleList<T>. BinhexDumpWnd, the main window of the Tab, owns the collections of meta objects, and uses _persistMetafile_ to persist them across processes of the Tab.
+They are logical objects created and managed by Tab. They are stored in a data file managed by _persistMetafile_. The Tab uses the expression, `tag`, to refer to a colored region with an annotation.
+
+Meta objects are managed by the three collection classes which all derive from _simpleList<T>_. _BinhexDumpWnd_, the main window of the Tab, owns the meta object collections, and uses _persistMetafile_ to persist them across processes that load the Tab.
 
 ```C++
 class CRegionCollection : public simpleList<DUMPREGIONINFO> {...};
