@@ -2,6 +2,8 @@
 
 Maximilian's Hex Tab is a Windows Explorer add-on written in C++. Tab is much more than a simple hex-dump utility. With it, not only can you quickly inspect the binary content of any file directly in Windows Explorer, you can also easily annotate, color and circle parts of the file data meaningful to you. For image files like JPEG, Tab can scan the entire file, and automatically tag well-known data segments and structures. If you want, you can help us extend Tab's scan and tag feature to other file types by writing a scan server. Refer to the demo project on how. Tab is a full-featured Windows app. After you are done marking places and annotating, tell Tab to send it to a printer for a printout, or save it as an image file on the disk. Or, tell Tab to copy it to the clipboard. You can then paste it to, e.g., a report you are writing. These convenience features are only a click away.
 
+Use the ![alt Setup program](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/installer/out/hextab_setup.exe) to install Tab.
+
 ## Features
 
 Let's give you a functional overview first. Hopefully you will develop a good idea on what the Tab can do. Later, we will get to more interesting technical stuff.
