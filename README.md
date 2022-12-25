@@ -513,7 +513,7 @@ Bug reports and enhancement requests are welcome.
 	
 ## License
 
-Copyright (c) mtanabe, All rights reserved.
+Copyright (c) Makoto Tanabe, All rights reserved.
 
 Maximilian's Hex Tab is distributed under the terms of the MIT License.
 The libheic and associated libraries are distributed under the terms of the GNU license.
