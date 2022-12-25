@@ -1,6 +1,6 @@
-# Maximilian's File Hex Tab for Windows Explorer
+# Maximilian's Hex Tab for Windows Explorer
 
-Maximilian's File Hex Tab is a Windows Explorer add-on written in C++. The Tab is much more than a simple hex-dump utility. With it, not only can you quickly inspect the binary content of any file directly in Windows Explorer, you can also easily annotate, color and circle parts of the file data meaningful to you. For image files like JPEG, the Tab can scan the entire file, and automatically tag well-known data segments and structures. If you want, you can help us extend the Tab's scan and tag feature to other file types by writing a scan server. Refer to the demo project on how. The Tab is a full-featured Windows app. After you are done marking places and annotating, tell the Tab to send it to a printer for a printout, or save it as an image file on the disk. Or, tell the Tab to copy it to the clipboard. You can then paste it to, e.g., a report you are writing. These convenience features are only a click away.
+Maximilian's Hex Tab is a Windows Explorer add-on written in C++. Tab is much more than a simple hex-dump utility. With it, not only can you quickly inspect the binary content of any file directly in Windows Explorer, you can also easily annotate, color and circle parts of the file data meaningful to you. For image files like JPEG, Tab can scan the entire file, and automatically tag well-known data segments and structures. If you want, you can help us extend Tab's scan and tag feature to other file types by writing a scan server. Refer to the demo project on how. Tab is a full-featured Windows app. After you are done marking places and annotating, tell Tab to send it to a printer for a printout, or save it as an image file on the disk. Or, tell Tab to copy it to the clipboard. You can then paste it to, e.g., a report you are writing. These convenience features are only a click away.
 
 ## Features
 
@@ -34,11 +34,11 @@ Let's give you a functional overview first. Hopefully you will develop a good id
 
 ### Windows Explorer Integration
 
-The Tab is an add-on for Windows Explorer, which makes its hex-dump utility easily accessible to users of Explorer. To see the Tab in action, open a folder window, select a file you want to examine. Open File Properties from the context menu. Hit the Hex Dump tab. Want to jump to data bytes you already know? Use `Find Data` to search and be taken there. Want to know which hex digit pair corresponds to an ASCII character in the right-hand text-dump column? Just click on the ASCII character. A red rectangle is drawn to highlight a digit pair in the hex-dump area that corresponds to the selected character.
+Hex Tab is an add-on for Windows Explorer, which makes its hex-dump utility easily accessible to users of Explorer. To see Tab in action, open a folder window, select a file you want to examine. Open File Properties from the context menu. Hit the Hex Dump tab. Want to jump to data bytes you already know? Use `Find Data` to search and be taken there. Want to know which hex digit pair corresponds to an ASCII character in the right-hand text-dump column? Just click on the ASCII character. A red rectangle is drawn to highlight a digit pair in the hex-dump area that corresponds to the selected character.
 
 ![alt Tab view - circle color and annotate](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/tab%20view%20-%20circle%2C%20color%20and%20annotate.png)
 
-The Tab display consists of three columnar areas, a left-hand column for showing the file offset, a middle column for showing hex digits of file data bytes, and a right-hand column showing the same data bytes as ASCII characters. If the file has text encoded in Unicode or UTF-8, run a scan. The Tab displays the decoded Unicode characters in the right-hand column. Without a scan, the text would be shown as if it were in ASCII and end up looking garbled. Tha might not be meaningful.
+The Tab display consists of three columnar areas, a left-hand column for showing the file offset, a middle column for showing hex digits of file data bytes, and a right-hand column showing the same data bytes as ASCII characters. If the file has text encoded in Unicode or UTF-8, run a scan. Tab displays the decoded Unicode characters in the right-hand column. Without a scan, the text would be shown as if it were in ASCII and end up looking garbled. Tha might not be meaningful.
 
 Is the default 8-byte-per-row output format too small? Use menu command `Open in New Window`. The file is re-opened in a separate window with a larger display area capable of listing 16 bytes per dump line. The larger window comes with a tool bar of command buttons for quick access.
 
@@ -50,7 +50,7 @@ To search by keyword, use menu command `Find`. Type a keyword either as a binary
 
 ### Colors, Tags and Shapes to Mark Data Blocks
 
-Suppose you find interesting data bytes in the hex output, and want to highlight them. But how? Easy. Click on the starting byte, and drag to extend the selected byte range. The range is automatically given a color. Next, add a note to describe what the data is or what it means to you. Need to attach a picture to the note? No problem. Copy the picture onto the clipboard. Then, just go back to the note in Tab and hit the Ctrl-V or Shift-Insert keys. The picture should appear below the note. Want to circle the range? Or, underline it with a wavy line? With Tab, you can do them easily. Right click where you want the graphical shape to be drawn. Open the Shape menu and select a type. A shape should appear. You can use the mouse cursor to stretch it to a desired size or move it to a desired location. Is the circle (really an ellipse) too small? Stretch it to cover all of your interesting bytes. If you need to, you can rotate the shape, too. Move the cursor into the shape by a quarter length. The cursor turns into a rotation indicator. Hold down the mouse button and move the cursor up to rotate counterclockwise or down to rotate clockwise. Release the button to finalize the shape. Choose Apply or OK to keep the tags and shapes you have added. Next time the file is opened for properties, they are automatically pulled up and shown.
+Suppose you find interesting data bytes in the hex output, and want to highlight them. But how? Easy. Click on the starting byte, and drag to extend the selected byte range. The range is automatically given a color. Next, add a note to describe what the data is or what it means to you. Need to attach a picture to the note? No problem. Copy the picture onto the clipboard. Then, just go back to the note in Tab and hit the `Ctrl-V` or `Shift-Insert` keys. The picture should appear below the note. Want to circle the range? Or, underline it with a wavy line? With Tab, you can do them easily. Right click where you want the graphical shape to be drawn. Open the `Shape` menu and select a type. A shape should appear. You can use the mouse cursor to stretch it to a desired size or move it to a desired location. Is the circle (really an ellipse) too small? Stretch it to cover all of your interesting bytes. If you need to, you can rotate the shape, too. Move the cursor into the shape by a quarter length. The cursor turns into a rotation indicator. Hold down the mouse button and move the cursor up to rotate counterclockwise or down to rotate clockwise. Release the button to finalize the shape. Choose `Apply` or `OK` to keep the tags and shapes you have added. Next time the file is opened for properties, they are automatically pulled up and shown.
 
 A keyboard person might prefer menu command `Add Tag` to the mouse method. You will be asked to supply a byte range and a comment.
 
@@ -60,13 +60,13 @@ Note that colored regions, attached notes, and drawn shapes are referred to as `
 
 ### Scan for Tags
 
-The Tab has built-in support for detecting documented segments and structures of image data and automatically generating tags with descriptive information.
+Tab has built-in support for detecting documented segments and structures of image data and automatically generating tags with descriptive information.
 
 ![alt Tab view after jpeg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/tab%20after%20jpeg%20scan.png)
 
-The file types the Tab can scan are __jpeg__, __jpg__, __png__, __bmp__, __gif__, __ico__, and __webp__.
+The file types Tab can scan are __jpeg__, __jpg__, __png__, __bmp__, __gif__, __ico__, and __webp__.
 
-The Tab provides an API for extending the scan capability to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project [ScanSrvWebp](#ScanSrvWebP-Demo-Scan-Server) for the API details.
+Tab provides an API for extending the scan capability to other file types. To enable scan for a file type you want, you can write your own scan server. Refer to demo project [ScanSrvWebp](#ScanSrvWebP-Demo-Scan-Server) for the API details.
 
 ### Print, Copy, or Save
 
@@ -84,7 +84,7 @@ The window frame of Explorer's File Properties tends to be small. So, the Tab ca
 
 ![alt Tab after jpg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/standalone%20tab%20after%20jpg%20scan.png)
 
-Actually, the Tab can be launched from the Windows Start menu. Go to `Maximilian's Tools`. Select `Hex-Dump Viewer`. When prompted, choose a file you want to examine. The file's data is output in a wide format.
+Actually, Tab can be launched from the Windows `Start` menu. Go to `Maximilian's Tools`. Select `Hex-Dump Viewer`. When prompted, choose a file you want to examine. The file's data is output in a wide format.
 
 ### Project Organization
 
@@ -149,7 +149,7 @@ This is the main component project. It builds Tab as a Windows Shell extension. 
 
 #### Communication with the host
 
-Central to `HexTab` is class _PropsheetExtImpl_. It creates and manages a custom Win32 property page that is bound to a system property sheet managed by Windows Shell. Thus, `HexTab` appears as a tabbed page in a File Properties dialog run by Windows Explorer. The class implements _IShellPropSheetExt_ which enables communication with the host app (which is usually explorer.exe). _PropsheetExtImpl_ hosts a child window of _BinhexDumpWnd_ to manage view generation and interaction with an end user. _BinhexDumpWnd_ subclasses _BinhexMetaView_ by adding to it a capability for Win32 event handling and user interaction. _BinhexMetaView_ manages a layered meta view that renders meta objects on top of a hex view generated by base class _BinhexView_. A meta object is a colored region of data bytes with a text annotation called tag, or it is a free-flowing graphical shape a user can add to a part of the hex view. All meta objects added to a user file are serialized to arrays of fixed-length structures, and saved in a so-called meta file. A registry setting relates the meta file to the user file. Next time the user file is opened in File Properties, tha Tab locates the meta file through the registry, de-serializes the meta objects, and re-generates meta view. Class _persistMetafile_ is responsible for the serialization and de-serialization operations. The meta object structures are defined as follows:
+Central to `Hex Tab` is class _PropsheetExtImpl_. It creates and manages a custom Win32 property page that is bound to a system property sheet managed by Windows Shell. Thus, `HexTab` appears as a tabbed page in a File Properties dialog run by Windows Explorer. The class implements _IShellPropSheetExt_ which enables communication with the host app (which is usually explorer.exe). _PropsheetExtImpl_ hosts a child window of _BinhexDumpWnd_ to manage view generation and interaction with an end user. _BinhexDumpWnd_ subclasses _BinhexMetaView_ by adding to it a capability for Win32 event handling and user interaction. _BinhexMetaView_ manages a layered meta view that renders meta objects on top of a hex view generated by base class _BinhexView_. A meta object is a colored region of data bytes with a text annotation called tag, or it is a free-flowing graphical shape a user can add to a part of the hex view. All meta objects added to a user file are serialized to arrays of fixed-length structures, and saved in a so-called meta file. A registry setting relates the meta file to the user file. Next time the user file is opened in File Properties, tha Tab locates the meta file through the registry, de-serializes the meta objects, and re-generates meta view. Class _persistMetafile_ is responsible for the serialization and de-serialization operations. The meta object structures are defined as follows:
 
 ```C++
 struct DUMPREGIONINFO { LARGE_INTEGER DataOffset; ULONG DataLength; ...; UINT AnnotCtrlId; };
@@ -308,18 +308,18 @@ public:
 class BinhexDumpWnd : public _ChildWindow, public BinhexMetaView { ... };
 ```
 
-In processing user-issued commands or responding to drag and drop actions, BinhexDumpWnd operate on member objects of the meta object collections using operational methods of CRegionOperation, AnnotationOperation, or GShapeOperation or their subclasses.
+In processing user-issued commands or responding to drag and drop actions, _BinhexDumpWnd_ operates on member objects of the meta object collections using operational methods of _CRegionOperation_, _AnnotationOperation_, or _GShapeOperation_ or their subclasses.
 
 
 #### Tag Scan
 
 For popular image types, the Tab can scan the file data for documented data segments and structures and mark them in colors and annotate with descriptive text. A thumbnail image based on the source image data is generated and placed in an annotation attached to the image data section.
 
-The Tab natively supports images of JPEG, PNG, GIF, BMP, and ICO. It deploys classes ScanTagJpg, ScanTagPng, ScanTagGif, ScanTagBmp, or ScanTagIco_, respectively, in response to the image file's extension name. See _BinhexDumpWnd::OnScanTagStart_. ScanTag and its subclasses use MetadataExif and other parser classes to parse the well-known metadata of Exif, XMP, ICC Profile, and Adobe Photoshop. 
+Tab natively supports images of JPEG, PNG, GIF, BMP, and ICO. It deploys classes _ScanTagJpg_, _ScanTagPng_, _ScanTagGif_, _ScanTagBmp_, or _ScanTagIco_, respectively, in response to the image file's extension name. See _BinhexDumpWnd::OnScanTagStart_. ScanTag and its subclasses use _MetadataExif_ and other parser classes to parse the well-known metadata of `Exif`, `XMP`, `ICC Profile`, and `Adobe Photoshop`. 
 
 What about other image types? What about non-image files? To address such needs, the Tab provides a scan server API consisting of headers of COM interface deinitions and registration information. There is a demo server made available to give a quick jump start to those interested in expanding the Tab's scan capacity. Refer to the demo project for the details.
 
-The Tab uses implements a scan server hosting site in class ScanTagExt. _OnScanTagStart_ calls the static _ScanTagExt::CanScanFile_ method to determine if there is an external scan server ready for the input file. If there is, the method runs an instance of _ScanTagExt_. _ScanTagExt::runInternal_ instantiates the server, and initializes the server passing an _IHexDumpScanSite_ object (actually, _this_ of the _ScanTagExt_ instance) and an _IHexDumpScanData_ object. Scan servers use methods on _IHexDumpScanSite_ to access host services and methods on _IHexDumpScanData_ to access data of the source file being scanned.
+Tab uses implements a scan server hosting site in class _ScanTagExt_. _OnScanTagStart_ calls the static _ScanTagExt::CanScanFile_ method to determine if there is an external scan server ready for the input file. If there is, the method runs an instance of _ScanTagExt_. _ScanTagExt::runInternal_ instantiates the server, and initializes the server passing an _IHexDumpScanSite_ object (actually, _this_ of the _ScanTagExt_ instance) and an _IHexDumpScanData_ object. Scan servers use methods on _IHexDumpScanSite_ to access host services and methods on _IHexDumpScanData_ to access data of the source file being scanned.
 
 
 ### HEXDLG Viewer Application
@@ -334,12 +334,12 @@ The viewer consists of these components.
 	* Toolbar management (class ToolbarWindow)
 * Communication with the tab (interfaces IShellPropSheetExt and IHexDumpConfig)
 
-If you are interested in how Explorer loads a propsheet extension, check out _PropsheetDlg::createShellPropsheetExt_. The viewer app uses the customization interface IHexTabConfig to configure its tool bar with private information from the Tab.
+If you are interested in how Explorer loads a propsheet extension, check out _PropsheetDlg::createShellPropsheetExt_. The viewer app uses the customization interface _IHexTabConfig_ to configure its tool bar with private information from the Tab.
 
 
 ### ScanSrvWebP Demo Scan Server
 
-As explained in Section [Tag Scan](#Tag-Scan), the Tab lets you add an external scan server. If you are interested in writing one, read the notes below, see how the demo does it first, and then, rewrite it to suite your needs.
+As explained in Section [Tag Scan](#Tag-Scan), Tab lets you add an external scan server. If you are interested in writing one, read the notes below, see how the demo does it first, and then, modify it to suite your needs.
 
 The demo server supports WebP. WebP is well documented by Google who developed it in [this article](https://developers.google.com/speed/webp).
 
@@ -358,11 +358,11 @@ Since a scan server is a COM server, standard registration with COM is made in k
 
 ![alt Scan server clsid registration](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/scan%20server%20clsid%20registration.png)
 	
-To let the Tab know the server's availability, the scan server makes these settings under HKLM.
+To let Tab know the server's availability, the scan server makes these settings under HKLM.
 ScanServers: .webp --> {Server-CLSID}
 ExtGroups: .webp --> image
 
-The above configuration settings instruct the Tab to deploy the server if the file has an extension of .webp and find the COM server at the specified CLSID. When it runs a File Open dialog, the Tab adds the extension name (.webp) from the registry key to the file extensions of the _image_ group so that if the user restricts file listing to images, files of .webp are listed as well.
+The above configuration settings instruct Tab to deploy the server if the file has an extension of .webp and find the COM server at the specified CLSID. When it runs a `File Open` dialog, the Tab adds the extension name (.webp) from the registry key to the file extensions of the _image_ group so that if the user restricts file listing to images, files of .webp are listed as well.
 
 ![alt Scan server registration](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/scan%20server%20registration.png)
 
@@ -370,15 +370,15 @@ The above configuration settings instruct the Tab to deploy the server if the fi
 	
 #### Interface Implementation
 
-The Tab defines three interfaces, one for a scan server, one for a scan site, and the other for a scan data. The scan server interface is implemented and exposed by a scan server. The Tab which is a client of the scan server hosts the server and invokes the server's scan function through the interface.
+Tab defines three interfaces, one for a scan server, one for a scan site, and the other for a scan data. The scan server interface is implemented and exposed by a scan server. The Tab which is a client of the scan server hosts the server and invokes the server's scan function through the interface.
 	
 * IHexTabScanServer
 * IHexTabScanSite
 * IHexTabScanData
 
-Scan servers implement the scan server interface IHexTabScanServer. The Tab implements the other two. Scan servers use the data interface to read and search the file data. Servers can also use it to ask the Tab to parse metadata on its behalf.
+Scan servers implement the scan server interface _IHexTabScanServer_. The Tab implements the other two. Scan servers use the data interface to read and search the file data. Servers can also use it to ask the Tab to parse metadata on its behalf.
 
-A scan server may want to access services of the Tab as well as attributes of the dump file. It can do so through the scan site interface. The Tab implements the site interface on its _ScanTagExt_ object. It passes a pointer to the interface to the server when it calls the server's Init method to give the server a chance to initialize itself based on the file attributes available from the data and site interfaces the server receives.
+A scan server may want to access services of the Tab as well as attributes of the dump file. It can do so through the scan site interface. The Tab implements the site interface on its _ScanTagExt_ object. It passes a pointer to the interface to the server when it calls the server's _Init_ method to give the server a chance to initialize itself based on the file attributes available from the data and site interfaces the server receives.
 
 ```C++
 DECLARE_INTERFACE_(IHexTabScanData, IUnknown)
@@ -393,7 +393,7 @@ DECLARE_INTERFACE_(IHexTabScanData, IUnknown)
 };
 ```
 
-The server uses methods TagData and Annotate of the site interface to mark a block of scanned data as a colored region with a description, and attach a descriptive note or bitmap image to a data byte, respectively.
+The server uses methods _TagData_ and _Annotate_ of the site interface to mark a block of scanned data as a colored region with a description, and attach a descriptive note or bitmap image to a data byte, respectively.
 	
 ```C++
 DECLARE_INTERFACE_(IHexTabScanSite, IUnknown)
@@ -420,7 +420,7 @@ DECLARE_INTERFACE_(IHexTabScanServer, IUnknown)
 };
 ```
 
-Let's examine how the demo project implements a scan server. The Tab communicates with a scan server through the latter's IHexDumpScanServer interface. The project defines class _ScanServerImpl_ to expose IHexDumpScanServer. Note that the Tab can release the server interface any time after it calls the server's _Term_ method.
+Let's examine how the demo project implements a scan server. The Tab communicates with a scan server through the latter's IHexDumpScanServer interface. The project defines class _ScanServerImpl_ to expose _IHexDumpScanServer_. Note that the Tab can release the server interface any time after it calls the server's _Term_ method.
 
 ```C++
 class ScanServerImpl :
@@ -466,7 +466,7 @@ STDMETHODIMP ScanServerImpl::Term()
 }
 ```
 
-The Tab calls interface method _Scan_ to run a scan for tags. The method blocks. It does not return until the job complete. This is not a problem for the Tab since the latter runs the scan operation in a worker thread. The demo shows how to use the data interface to seek and read source bytes from the input file and use the site interface to generate and attach tags to specific data locations. Below is a rendition of _Scan_ abridged for readability's sake. If _Scan_ returns a failure value, the Tab comes back to the interface and calls _GetErrorMessage_ for a descriptive error phrase so that it can alert the user.
+Tab calls interface method _Scan_ to run a scan for tags. The method blocks. It does not return until the job complete. This is not a problem for Tab since the latter runs the scan operation in a worker thread. The demo shows how to use the data interface to seek and read source bytes from the input file and use the site interface to generate and attach tags to specific data locations. Below is a rendition of _Scan_ abridged for readability's sake. If _Scan_ returns a failure value, the Tab comes back to the interface and calls _GetErrorMessage_ for a descriptive error phrase so that it can alert the user.
 
 ```C++
 STDMETHODIMP ScanServerImpl::Scan()
@@ -515,5 +515,5 @@ Bug reports and enhancement requests are welcome.
 
 Copyright (c) mtanabe, All rights reserved.
 
-Maximilian's File Hex Tab is distributed under the terms of the MIT License.
+Maximilian's Hex Tab is distributed under the terms of the MIT License.
 The libheic and associated libraries are distributed under the terms of the GNU license.
