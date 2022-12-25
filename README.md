@@ -38,7 +38,7 @@ Hex Tab is an add-on for Windows Explorer, which makes its hex-dump utility easi
 
 ![alt Tab view - circle color and annotate](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/tab%20view%20-%20circle%2C%20color%20and%20annotate.png)
 
-The Tab display consists of three columnar areas, a left-hand column for showing the file offset, a middle column for showing hex digits of file data bytes, and a right-hand column showing the same data bytes as ASCII characters. If the file has text encoded in Unicode or UTF-8, run a scan. Tab displays the decoded Unicode characters in the right-hand column. Without a scan, the text would be shown as if it were in ASCII and end up looking garbled. Tha might not be meaningful.
+Tab display consists of three columnar areas, a left-hand column for showing the file offset, a middle column for showing hex digits of file data bytes, and a right-hand column showing the same data bytes as ASCII characters. If the file has text encoded in Unicode or UTF-8, run a scan. Tab displays the decoded Unicode characters in the right-hand column. Without a scan, the text would be shown as if it were in ASCII and end up looking garbled. Tha might not be meaningful.
 
 Is the default 8-byte-per-row output format too small? Use menu command `Open in New Window`. The file is re-opened in a separate window with a larger display area capable of listing 16 bytes per dump line. The larger window comes with a tool bar of command buttons for quick access.
 
@@ -80,7 +80,7 @@ Want to insert hex output into a document you are writing? Use `Save As Image`. 
 
 ### Standalone Viewer App
 
-The window frame of Explorer's File Properties tends to be small. So, the Tab can only get a limited display area, and a view that it generates tends to be short and narrow. By default, the Tab outputs the hex digits in an 8-bytes-per-row format. Although it can be reconfigured to output more bytes per row, you'd need to either use the scrollbar or choose a smaller font to see all parts of the view. The Tab gives you an alternative. You can run it as a  standalone viewer outside of Windows Explorer. Free from space constraint, the Tab runs in a much larger window frame, now able to output 16 or even 32 data bytes per row. To put it in wide-view mode, select `Open in New Window` from the context menu. Wide view defaults to a 16-bytes-per-row format. If you need to see even more bytes, choose the alternative 32-byte format. Aside from the larger display, the standalone viewer sports a toolbar. Use it to quickly access main features of the Tab.
+The window frame of Explorer's File Properties tends to be small. So, the Tab can only get a limited display area, and a view that it generates tends to be short and narrow. By default, the Tab outputs the hex digits in an 8-bytes-per-row format. Although it can be reconfigured to output more bytes per row, you'd need to either use the scrollbar or choose a smaller font to see all parts of the view. Tab gives you an alternative. You can run it as a  standalone viewer outside of Windows Explorer. Free from space constraint, the Tab runs in a much larger window frame, now able to output 16 or even 32 data bytes per row. To put it in wide-view mode, select `Open in New Window` from the context menu. Wide view defaults to a 16-bytes-per-row format. If you need to see even more bytes, choose the alternative 32-byte format. Aside from the larger display, the standalone viewer sports a toolbar. Use it to quickly access main features of the Tab.
 
 ![alt Tab after jpg scan](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/ref/standalone%20tab%20after%20jpg%20scan.png)
 
@@ -115,7 +115,7 @@ To build the installer, install [`Maximilian's Automation Utility`](https://gith
 
 ### HEXTAB Shell Propertysheet Extention DLL
 
-This is the main component project. It builds Tab as a Windows Shell extension. The Tab consists of the components below with the C++ class or COM interface associations noted in parantheses.
+This is the main component project. It builds Tab as a Windows Shell extension. Tab consists of the components below with the C++ class or COM interface associations noted in parantheses.
 
 * Communication with the host (_class PropsheetExtImpl_)
   * Propsheet extension (_interface IShellPropSheetExt_)
@@ -173,7 +173,7 @@ Class _ROFile_ serves data bytes from the user file to the view generator. It wr
 
 #### UI Management
 
-In a standard Win32 window application, defining and routing keyboard shortcut keys is straightforward. Add an accelerator table to the resource file (rc) at design time, and call Win32 API function TranslateAccelerator in a message pump at run time. Unfortunately, this simple model does not work for a shell extension like Tab. Tab does not own a message pump. Explorer does. Tab has no way to ask Explorer to adopt its keycode mappings and do keycode translation. To work around the shortcoming, Tab sets up a message hook and intercepts Win32 messages generated in Explorer's message loop. If the intercepted message is destined for Tab's main window (of BinhexDumpWnd), Tab calls TranslateAccelerator generating a desired WM_COMMAND message for itself. The accelerator loading and the message interception and translation are implemented in class _KeyboardAccel_. Another challenge Tab must deal with is this. Explorer is UI multi-threaded owning multiple message pumps. Multiple instances of Tab may coexist. So, to be able to bind to the right pump, Tab uses the Win32 thread local storage and saves the per-thread hook descriptors there. That way, each instance of Tab automatically hooks the right message pump, making sure that each shortcut key is directed to the right instance of Tab. The TLS management is implemented in class _TLSData_.  Tab maintains a singlton instance of _TLSData_ (refer to dllmain.cpp for the definition).
+In a standard Win32 window application, defining and routing keyboard shortcut keys is straightforward. Add an accelerator table to the resource file (.rc) at design time, and call Win32 API function _TranslateAccelerator_ in a message pump at run time. Unfortunately, this simple model does not work for a shell extension like Tab. Tab does not own a message pump. Explorer does. Tab has no way to ask Explorer to adopt its keycode mappings and do keycode translation. To work around the shortcoming, Tab sets up a message hook and intercepts Win32 messages generated in Explorer's message loop. If the intercepted message is destined for Tab's main window (of _BinhexDumpWnd_), Tab calls _TranslateAccelerator_ generating a desired _WM_COMMAND_ message for itself. The accelerator loading and the message interception and translation are implemented in class _KeyboardAccel_. Another challenge Tab must deal with is this. Explorer is UI multi-threaded owning multiple message pumps. Multiple instances of Tab may coexist. So, to be able to bind to the right pump, Tab uses the Win32 thread local storage and saves the per-thread hook descriptors there. That way, each instance of Tab automatically hooks the right message pump, making sure that each shortcut key is directed to the right instance of Tab. The TLS management is implemented in class _TLSData_.  Tab maintains a singlton instance of _TLSData_ (refer to dllmain.cpp for the definition).
 
 There are basically three sources of commands and messages that require Tab's attention. One is internal commands generated by context menus. Another is user-generated mouse events that reposition the cursor, scroll the page, or start and end drag and drop operations. There is a third kind. That's system-generated messages for routine windowing events like closing the app window. We won't go into the details for that since standard Win32 handling is all that's required.
 
@@ -226,11 +226,11 @@ The dialog's _OnCommand_ calls _updateSearchConfig_ to save the keyword string i
 
 _OnSaveData_ for _Save as Image_ is another dialog-invoking command. It uses _class DataRangeDlg_ to interact with a user. The dialog class collects three settings, a destination medium, a data range, and a choice of grouping of annotations or not. The data range can be specified either in number of bytes or number of dump lines. To help the user see the effect of a change he makes before it is made permanent, the dialog uses _BinhexMetaPageView_, a subclass of _BinhexMetaView_, and renders a preview of what the changed hex dump would look like. The view generator subclass is capable of splitting the viewport into two sections, one section showing the usual hex numbers and ASCII text, and the other section showing a stack of annotations that belong to the data range in the current view. It uses the split viewport in response to selection of the _IDC_CHECK_SEGREGATE_ANNOTS_ option. When the split option is enabled, _BinhexMetaPageView_ generates a full-scale bitmap image first. Then, it reduces the image size to fit the preview rectangle. _DataRangeDlg_ keeps the full-scale bitmap in a member variable. _OnSaveData_ picks up the bitmap from the dialog. If the destination is a file, the method uses the bitmap helper class _BitmapImage_ to write the bitmap to a file in a user-supplied location. If the destination is the system clipboard, Win32 _SetClipboardData_ API is called with the bitmap.
 
-Last but not least, there is the dialog-invoking command of _Print_. _OnPrintData_ responds to it. Tab maintains an instance of struct _HexdumpPageSetupParams_ throughout its life. The dialog class _HexdumpPrintDlg_ runs a page setup using setup parameters kept in the _HexdumpPageSetupParams_. On successful conclusion of the dialog, a print job is started by creating an instance of class _HexdumpPrintJob_. It's a worker running in a separate thread so as not to block the main UI thread. The worker renders the selected pages of hex dump in the device context of a selected printer. When it's done, the worker posts a notification WM_COMMAND message (IDM_PRINT_EVENT_NOTIF with task ID of TskFinishJob). _OnCommand_ of _BinhexDumpWnd_ responds to it by initiating a cleanup.
+Last but not least, there is the dialog-invoking command of _Print_. _OnPrintData_ responds to it. Tab maintains an instance of struct _HexdumpPageSetupParams_ throughout its life. The dialog class _HexdumpPrintDlg_ runs a page setup using setup parameters kept in the _HexdumpPageSetupParams_. On successful conclusion of the dialog, a print job is started by creating an instance of class _HexdumpPrintJob_. It's a worker running in a separate thread so as not to block the main UI thread. The worker renders the selected pages of hex dump in the device context of a selected printer. When it's done, the worker posts a notification _WM_COMMAND_ message (_IDM_PRINT_EVENT_NOTIF_ with task ID of TskFinishJob). _OnCommand_ of _BinhexDumpWnd_ responds to it by initiating a cleanup.
 
-There are a few caveats you might want to be aware of when using the [PrintDlg API](https://docs.microsoft.com/en-us/windows/win32/api/commdlg/nc-commdlg-lpprinthookproc). There is the supposedly 'better' version called PrintDlgEx. With that API function, you are supposed to be able to take a smarter partial template approach rather than the approach imposed by PrintDlg. The latter forces you to import and edit the entire dialog template, a chore you won't miss. Unfortunately, I could not get PrintDlgEx customization to work. If you know how, let me know.
+There are a few caveats you might want to be aware of when using the [PrintDlg API](https://docs.microsoft.com/en-us/windows/win32/api/commdlg/nc-commdlg-lpprinthookproc). There is the supposedly 'better' version called _PrintDlgEx_. With that API function, you are supposed to be able to take a smarter partial template approach rather than the approach imposed by _PrintDlg_. The latter forces you to import and edit the entire dialog template, a chore you won't miss. Unfortunately, I could not get _PrintDlgEx_ customization to work. If you know how, let me know.
 
-To customize the PrintDlg UI, the PRINTDLGORD dialog template was copied to and edited in res\lib.rc2. PRINTDLGORD needs dlgs.h of the Windows SDK for control IDs. The most important aspect of the customization regarded the adding of a preview pane. It was neccessary to have a preview so Tab can give the user a feedback on a change he makes to the print range, margins, Group Notes, or Fit to Page Width before it's made permanent. Note that the preview pane (IDC_STATIC_PAGE1) is a static control with style SS_OWNERDRAW. _OnCommand_ responds to the control repaint event by invalidating the preview pane. _OnDrawItem_ responds to the refresh request by updating the preview output. The method uses class _BinhexMetaPageView_ to turn the starting or ending page into a bitmap image which is then scaled to fit between the margins.
+To customize the PrintDlg UI, the _PRINTDLGORD_ dialog template was copied to and edited in res\lib.rc2. _PRINTDLGORD_ needs `dlgs.h` of the Windows SDK for control IDs. The most important aspect of the customization regarded the adding of a preview pane. It was neccessary to have a preview so Tab can give the user a feedback on a change he makes to the print range, margins, `Group Notes`, or `Fit to Page Width` before it's made permanent. Note that the preview pane (_IDC_STATIC_PAGE1_) is a static control with style _SS_OWNERDRAW_. _OnCommand_ responds to the control repaint event by invalidating the preview pane. _OnDrawItem_ responds to the refresh request by updating the preview output. The method uses class _BinhexMetaPageView_ to turn the starting or ending page into a bitmap image which is then scaled to fit between the margins.
 
 _OnPrintData_ calls _HexdumpPrintDlg::startPrinting_ to print the selected pages. _startPrinting_ creates an instance of _HexdumpPrintJob_ passing a _PRINTDLG_ structure filled with a printer descriptor and page settings chosen in the setup dialog. _HexdumpPrintJob_ runs a worker on a new thread to process the print job. If the Cancel button is clicked, the host generates a _PSN_QUERYCANCEL_ invoking _propsheetQueryCancel_ of _BinhexDumpWnd_. On receiving a confirmation from the user, _BinhexDumpWnd_ aborts the print job by calling _HexdumpPrintJob::stop_. The _stop_ method raises the thread kill signal (_kill_). The print task loop of _HexdumpPrintJob::runWorker_ detects the raised _kill_ and terminates the worker. If the print job completes, _runWorker_ posts an IDM_PRINT_EVENT_NOTIF notification for status TskFinishJob to _BinhexDumpWnd_ which in turn calls _HexdumpPrintJob::stop_ to make sure the worker is terminated.
 
@@ -240,7 +240,7 @@ If you look at _drawHexDump_ and _finishDumpLine_ of _BinhexView_, you see that 
 
 Tab uses a 10-pt fixed-pitch Courier font to draw the hex numbers. In a 600-dpi printer context, that translates to an average character width of 83 dots according to font metrics data collected under a debugger. That means the true 10-pt width could be anywhere between 82.1 and 83.9 dots. The repaint method of _drawRowBytes_ bases the text rectangle calculation on the character width. If the true 10-pt character width was 83.9 pixels but was rounded down to 83 due to truncation in a floating point-to-integer conversion, that would allow an error factor of up to 1/83 = 1.2% to creep in. That may not be a lot. But, inaccuracy increases as our point of interest moves closer to the right edge of the view. In our example, the point of interest is at the back of the data row which is at 3984 pixels away from the left edge of the view. 83 dots per character times 3 characters (2 for the two hex digits of the dump byte plus 1 for a separation space character) per data byte times 16 data bytes per row yields 3984 dots per row. So, the colored region should start at 3486 dots away from the left edge. If the truncation error was indeed 1.2%, the region in a perfectly accurate context would start at 3486 * 1.012 = 3527 dot. Then, the displacement of the region expressed in units of character widths can be calculated as (3527-3486)/83 = 0.49. That's half the character width. 
 
-As described above, the base repaint method draws the entire row of 16 hex numbers including the 2 trailling ones in a single call to DrawText. It renders the row starting at an x-coordinate origin of 0. In this case, the two trailling numbers are seem to be drawn starting at or close to the true point of 3527 dots from the origin. But, when the trailling numbers are marked as a colored region, they are displaced by an amount similar to what was predicted by the above analysis.
+As described above, the base repaint method draws the entire row of 16 hex numbers including the 2 trailling ones in a single call to _DrawText_. It renders the row starting at an x-coordinate origin of 0. In this case, the two trailling numbers are seem to be drawn starting at or close to the true point of 3527 dots from the origin. But, when the trailling numbers are marked as a colored region, they are displaced by an amount similar to what was predicted by the above analysis.
 
 The abovementioned metrics problem is addressed this way.
 
@@ -286,7 +286,7 @@ Meta objects refer to the following constructs:
 * annotations attached to specific data bytes, and
 * graphical shapes attached to specific data bytes.
 
-They are logical objects created and managed by Tab. They are stored in a data file managed by _persistMetafile_. The Tab uses the expression, `tag`, to refer to a colored region with an annotation.
+They are logical objects created and managed by Tab. They are stored in a data file managed by _persistMetafile_. Tab uses the expression, `tag`, to refer to a colored region with an annotation.
 
 Meta objects are managed by the three collection classes which all derive from _simpleList<T>_. _BinhexDumpWnd_, the main window of the Tab, owns the meta object collections, and uses _persistMetafile_ to persist them across processes that load the Tab.
 
@@ -313,18 +313,18 @@ In processing user-issued commands or responding to drag and drop actions, _Binh
 
 #### Tag Scan
 
-For popular image types, the Tab can scan the file data for documented data segments and structures and mark them in colors and annotate with descriptive text. A thumbnail image based on the source image data is generated and placed in an annotation attached to the image data section.
+For popular image types, Tab can scan the file data for documented data segments and structures and mark them in colors and annotate with descriptive text. A thumbnail image based on the source image data is generated and placed in an annotation attached to the image data section.
 
-Tab natively supports images of JPEG, PNG, GIF, BMP, and ICO. It deploys classes _ScanTagJpg_, _ScanTagPng_, _ScanTagGif_, _ScanTagBmp_, or _ScanTagIco_, respectively, in response to the image file's extension name. See _BinhexDumpWnd::OnScanTagStart_. ScanTag and its subclasses use _MetadataExif_ and other parser classes to parse the well-known metadata of `Exif`, `XMP`, `ICC Profile`, and `Adobe Photoshop`. 
+Tab natively supports images of `JPEG`, `PNG`, `GIF`, `BMP`, and `ICO`. It deploys classes _ScanTagJpg_, _ScanTagPng_, _ScanTagGif_, _ScanTagBmp_, or _ScanTagIco_, respectively, in response to the image file's extension name. See _BinhexDumpWnd::OnScanTagStart_. ScanTag and its subclasses use _MetadataExif_ and other parser classes to parse the well-known metadata of `Exif`, `XMP`, `ICC Profile`, and `Adobe Photoshop`. 
 
-What about other image types? What about non-image files? To address such needs, the Tab provides a scan server API consisting of headers of COM interface deinitions and registration information. There is a demo server made available to give a quick jump start to those interested in expanding the Tab's scan capacity. Refer to the demo project for the details.
+What about other image types? What about non-image files? To address such needs, the Tab provides a scan server API consisting of headers of COM interface deinitions and registration information. There is a demo server made available to give a quick jump start to those interested in expanding Tab's scan capacity. Refer to the demo project for the details.
 
 Tab uses implements a scan server hosting site in class _ScanTagExt_. _OnScanTagStart_ calls the static _ScanTagExt::CanScanFile_ method to determine if there is an external scan server ready for the input file. If there is, the method runs an instance of _ScanTagExt_. _ScanTagExt::runInternal_ instantiates the server, and initializes the server passing an _IHexDumpScanSite_ object (actually, _this_ of the _ScanTagExt_ instance) and an _IHexDumpScanData_ object. Scan servers use methods on _IHexDumpScanSite_ to access host services and methods on _IHexDumpScanData_ to access data of the source file being scanned.
 
 
 ### HEXDLG Viewer Application
 	
-This component project builds a standalone propsheet viewer, an alternative to _Explorer's File Properties_. It features a wide hex-dump format and an easy-to-use command tool bar. The viewer may be started from the _Windows Start_ menu. Open the _Maximilian's Tools_ popup and select _Hex-Dump Viewer_.
+This component project builds a standalone propsheet viewer, an alternative to Explorer's _File Properties_. It features a wide hex-dump format and an easy-to-use command tool bar. The viewer may be started from the _Windows Start_ menu. Open the _Maximilian's Tools_ popup and select _Hex-Dump Viewer_.
 	
 The viewer consists of these components.
 
@@ -334,14 +334,14 @@ The viewer consists of these components.
 	* Toolbar management (class ToolbarWindow)
 * Communication with the tab (interfaces IShellPropSheetExt and IHexDumpConfig)
 
-If you are interested in how Explorer loads a propsheet extension, check out _PropsheetDlg::createShellPropsheetExt_. The viewer app uses the customization interface _IHexTabConfig_ to configure its tool bar with private information from the Tab.
+If you are interested in how Explorer loads a propsheet extension, check out _PropsheetDlg::createShellPropsheetExt_. The viewer app uses the customization interface _IHexTabConfig_ to configure its tool bar with private information from Tab.
 
 
 ### ScanSrvWebP Demo Scan Server
 
 As explained in Section [Tag Scan](#Tag-Scan), Tab lets you add an external scan server. If you are interested in writing one, read the notes below, see how the demo does it first, and then, modify it to suite your needs.
 
-The demo server supports WebP. WebP is well documented by Google who developed it in [this article](https://developers.google.com/speed/webp).
+The demo server supports `WebP`. WebP is well documented by Google who developed it in [this article](https://developers.google.com/speed/webp).
 
 The basic formatting element WebP uses is the _chunk_ of _RIFF_. It is a generalized structure to package a piece of payload data, its size in bytes, and a textual code uniquely identifying the data. A file in WebP starts with a WebP file header of 12 bytes.
 
@@ -370,15 +370,15 @@ The above configuration settings instruct Tab to deploy the server if the file h
 	
 #### Interface Implementation
 
-Tab defines three interfaces, one for a scan server, one for a scan site, and the other for a scan data. The scan server interface is implemented and exposed by a scan server. The Tab which is a client of the scan server hosts the server and invokes the server's scan function through the interface.
+Tab defines three interfaces, one for a scan server, one for a scan site, and the other for a scan data. The scan server interface is implemented and exposed by a scan server. Tab which is a client of the scan server hosts the server and invokes the server's scan function through the interface.
 	
 * IHexTabScanServer
 * IHexTabScanSite
 * IHexTabScanData
 
-Scan servers implement the scan server interface _IHexTabScanServer_. The Tab implements the other two. Scan servers use the data interface to read and search the file data. Servers can also use it to ask the Tab to parse metadata on its behalf.
+Scan servers implement scan server interface _IHexTabScanServer_. Tab implements the other two. Scan servers use the data interface to read and search the file data. Servers can also use it to ask the Tab to parse metadata on its behalf.
 
-A scan server may want to access services of the Tab as well as attributes of the dump file. It can do so through the scan site interface. The Tab implements the site interface on its _ScanTagExt_ object. It passes a pointer to the interface to the server when it calls the server's _Init_ method to give the server a chance to initialize itself based on the file attributes available from the data and site interfaces the server receives.
+A scan server may want to access services of the Tab as well as attributes of the dump file. It can do so through the scan site interface. Tab implements the site interface on its _ScanTagExt_ object. It passes a pointer to the interface to the server when it calls the server's _Init_ method to give the server a chance to initialize itself based on the file attributes available from the data and site interfaces the server receives.
 
 ```C++
 DECLARE_INTERFACE_(IHexTabScanData, IUnknown)
@@ -407,7 +407,7 @@ DECLARE_INTERFACE_(IHexTabScanSite, IUnknown)
 };
 ```
 
-The Tab calls _Init_ to initialize the scan server, _Scan_ to start a tag scan, and _Term_ to terminate the server. If it receives a fail code from the methods, the Tab calls _GetErrorMessage_ to retrieve a corresponding error message.
+Tab calls _Init_ to initialize the scan server, _Scan_ to start a tag scan, and _Term_ to terminate the server. If it receives a fail code from the methods, the Tab calls _GetErrorMessage_ to retrieve a corresponding error message.
 	
 ```C++
 DECLARE_INTERFACE_(IHexTabScanServer, IUnknown)
@@ -420,7 +420,7 @@ DECLARE_INTERFACE_(IHexTabScanServer, IUnknown)
 };
 ```
 
-Let's examine how the demo project implements a scan server. The Tab communicates with a scan server through the latter's IHexDumpScanServer interface. The project defines class _ScanServerImpl_ to expose _IHexDumpScanServer_. Note that the Tab can release the server interface any time after it calls the server's _Term_ method.
+Let's examine how the demo project implements a scan server. Tab communicates with a scan server through the latter's IHexDumpScanServer interface. The project defines class _ScanServerImpl_ to expose _IHexDumpScanServer_. Note that the Tab can release the server interface any time after it calls the server's _Term_ method.
 
 ```C++
 class ScanServerImpl :
