@@ -97,7 +97,7 @@ Let's get technical. The project consists of four Visual Studio component projec
 
 Setup embeds both x64 and x86 msi installers. It picks and runs one appropriate for the system when it is launched.
 
-The toolset for msi build consists of a template msi, a build staging batch process, and a script for generating database tables and packaging the tables and executable binaries in an msi. Refer to [build.md]( ) for info on how the project is built.
+The toolset for msi build consists of a template msi, a build staging batch process, and a script for generating database tables and packaging the tables and executable binaries in an msi. Refer to [build.md](https://github.com/mtanabe-sj/Maximilians-Hex-Tab/blob/main/installer/readme.md) for info on how the project is built.
 
 ## Gettting Started
 
