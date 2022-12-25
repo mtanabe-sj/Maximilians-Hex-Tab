@@ -1,0 +1,56 @@
+//
+// SETUP.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+#include "libver.h"
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION FILEVER
+ PRODUCTVERSION PRODUCTVER
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK STRPRODUCTLANGCP
+        BEGIN
+            VALUE "ProductName", "Maximilian's Hex Tab\0"
+            VALUE "FileDescription", "Setup program for Maximilian's Hex Tab\0"
+            VALUE "ProductVersion", STRPRODUCTVER
+            VALUE "FileVersion", STRFILEVER
+            VALUE "LegalCopyright", STRLEGALCOPYRIGHT
+            VALUE "LegalTrademarks", STRLEGALTRADEMARK
+            VALUE "PrivateBuild", STRPRIVATEBUILD
+            VALUE "SpecialBuild", STRSPECIALBUILD
+            VALUE "Comments", "Requires administrator privileges to run.\0"
+            VALUE "CompanyName", STRCOMPANYNAME
+            VALUE "InternalName", "hextab_setup.exe\0"
+            VALUE "OriginalFilename", "HEXTAB_SETUP.EXE\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", PRODUCTLANGUAGE, PRODUCTCODEPAGE
+    END
+END
+
+#endif    // !_MAC
+
