@@ -1,0 +1,3 @@
+HEXTAB Library
+
+- ScanSrvWebp.dll : a demo scan server for image format 'WebP'

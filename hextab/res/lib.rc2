@@ -1,0 +1,130 @@
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+#include "libver.h"
+#include <dlgs.h>
+
+
+STRINGTABLE
+BEGIN
+  IDS_SAVEAS_FILTER "Bitmap Images (PNG, BMP)\0*.png;*.bmp\0All files\0*.*\0\0"
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+PRINTDLGORD DIALOG DISCARDABLE  32, 32, 289, 300
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU |
+DS_3DLOOK
+CAPTION "Print"
+FONT 8, "MS Shell Dlg"
+BEGIN
+	GROUPBOX        "Printer", grp4, 8, 4, 272, 84, WS_GROUP
+	LTEXT           "&Name:", stc6, 16, 20, 36, 8
+	COMBOBOX        cmb4, 52, 18, 152, 152,
+	CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+	PUSHBUTTON      "&Properties...", psh2, 212, 17, 60, 14, WS_GROUP
+	LTEXT           "Status:", stc8, 16, 36, 36, 10, SS_NOPREFIX
+	LTEXT           "", stc12, 52, 36, 224, 10, SS_NOPREFIX | SS_LEFTNOWORDWRAP
+	LTEXT           "Type:", stc7, 16, 48, 36, 10, SS_NOPREFIX
+	LTEXT           "", stc11, 52, 48, 224, 10, SS_NOPREFIX | SS_LEFTNOWORDWRAP
+	LTEXT           "Where:", stc10, 16, 60, 36, 10, SS_NOPREFIX
+	LTEXT           "", stc14, 52, 60, 224, 10, SS_NOPREFIX | SS_LEFTNOWORDWRAP
+	LTEXT           "Comment:", stc9, 16, 72, 36, 10, SS_NOPREFIX
+	LTEXT           "", stc13, 52, 72, 156, 10, SS_NOPREFIX | SS_LEFTNOWORDWRAP
+	AUTOCHECKBOX    "Print to fi&le", chx1, 212, 72, 64, 12, WS_GROUP
+	GROUPBOX        "Print range", grp1, 8, 92, 144, 64, WS_GROUP
+	RADIOBUTTON     "&All", rad1, 16, 106, 36, 12, WS_GROUP
+	RADIOBUTTON     "Pa&ges", rad3, 16, 122, 36, 12
+	RADIOBUTTON     "&Lines", rad2, 16, 138, 36, 12
+	RTEXT           "from", stc2, 52, 124, 18, 8
+	EDITTEXT        edt1, 72, 122, 32, 12, WS_GROUP | ES_NUMBER
+	RTEXT           "to", stc3, 104, 124, 10, 8
+	EDITTEXT        edt2, 116, 122, 32, 12, WS_GROUP | ES_NUMBER
+	GROUPBOX        "Copies", grp2, 160, 92, 120, 64, WS_GROUP
+	LTEXT           "Number of &copies:", stc5, 168, 108, 68, 8
+	EDITTEXT        edt3, 240, 106, 32, 12, WS_GROUP | ES_NUMBER
+	ICON            "", ico3, 162, 124, 76, 28, WS_GROUP | SS_CENTERIMAGE
+	AUTOCHECKBOX    "C&ollate", chx2, 240, 130, 36, 12, WS_GROUP
+	DEFPUSHBUTTON   "OK", IDOK, 180, 279, 48, 14, WS_GROUP
+	PUSHBUTTON      "Cancel", IDCANCEL, 232, 279, 48, 14
+	PUSHBUTTON      "&Help", 1038, 8, 279, 48, 14
+	RTEXT           "from", IDC_STATIC, 52, 140, 18, 8
+	EDITTEXT        IDC_EDIT_LINENUM1, 72, 138, 32, 13, ES_AUTOHSCROLL
+	RTEXT           "to", IDC_STATIC, 104, 140, 10, 8
+	EDITTEXT        IDC_EDIT_LINENUM2, 116, 138, 32, 13, ES_AUTOHSCROLL
+	CONTROL         "Group notes", IDC_CHECK_GROUPNOTES, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 17, 168, 55, 10
+	CONTROL         "Fit to page width", IDC_CHECK_FITTOPAGEWIDTH, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 17, 184, 70, 10
+	CONTROL         "", IDC_STATIC_PAGE1, "Static", SS_OWNERDRAW | SS_NOTIFY | WS_GROUP, 116, 162, 90, 108
+	SCROLLBAR       IDC_VSCROLLBAR, 206, 162, 10, 106, SBS_VERT
+	LTEXT           "Page 1", IDC_STATIC_PAGENUM1, 222, 170, 64, 30
+	GROUPBOX        "Margin", IDC_STATIC, 17, 202, 91, 67
+	LTEXT           "T", IDC_STATIC, 39, 215, 8, 8
+	EDITTEXT        IDC_EDIT_MARGIN_TOP, 49, 212, 27, 14, ES_AUTOHSCROLL
+	CONTROL         "", IDC_SPIN_TOP, "msctls_updown32", UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS, 67, 212, 10, 14
+	LTEXT           "L", IDC_STATIC, 25, 232, 8, 8
+	EDITTEXT        IDC_EDIT_MARGIN_LEFT, 33, 230, 27, 14, ES_AUTOHSCROLL
+	CONTROL         "", IDC_SPIN_LEFT, "msctls_updown32", UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS, 50, 230, 11, 14
+	LTEXT           "R", IDC_STATIC, 94, 232, 8, 8
+	EDITTEXT        IDC_EDIT_MARGIN_RIGHT, 63, 230, 27, 14, ES_AUTOHSCROLL
+	CONTROL         "", IDC_SPIN_RIGHT, "msctls_updown32", UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS, 79, 231, 11, 14
+	LTEXT           "B", IDC_STATIC, 39, 251, 8, 8
+	EDITTEXT        IDC_EDIT_MARGIN_BOTTOM, 49, 248, 27, 14, ES_AUTOHSCROLL
+	CONTROL         "", IDC_SPIN_BOTTOM, "msctls_updown32", UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS, 67, 248, 11, 14
+	LTEXT           "Font:", IDC_STATIC, 226, 229, 18, 8
+	EDITTEXT        IDC_EDIT_FONTNAME, 231, 239, 49, 14, ES_AUTOHSCROLL | ES_READONLY
+	EDITTEXT        IDC_EDIT_FONTSIZE, 231, 254, 30, 14, ES_AUTOHSCROLL | ES_READONLY
+	CONTROL         "", IDC_SPIN_FONTSIZE, "msctls_updown32", UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS, 251, 254, 10, 14
+	LTEXT           "pt", IDC_STATIC, 265, 256, 8, 8
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION FILEVER
+ PRODUCTVERSION PRODUCTVER
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "ProductName", STRPRODUCTNAME
+            VALUE "FileDescription", STRPRODUCTDESC
+			VALUE "ProductVersion", STRPRODUCTVER
+			VALUE "FileVersion", STRFILEVER
+			VALUE "LegalCopyright", STRLEGALCOPYRIGHT
+			VALUE "LegalTrademarks", STRLEGALTRADEMARK
+			VALUE "PrivateBuild", STRPRIVATEBUILD
+			VALUE "SpecialBuild", STRSPECIALBUILD
+			VALUE "Comments", STRCOMMENTS
+			VALUE "CompanyName", STRCOMPANYNAME
+			VALUE "InternalName", "hexdumptab\0"
+            VALUE "OriginalFilename", "hexdumptab.dll\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+		VALUE "Translation", PRODUCTLANGUAGE, PRODUCTCODEPAGE
+	END
+END
+
+#endif    // !_MAC
+

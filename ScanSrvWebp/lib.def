@@ -1,0 +1,13 @@
+; lib.def : Declares the module parameters for the DLL.
+
+LIBRARY	"ScanSrvWebp"
+; DESCRIPTION  'Maximilian's Webp Scan Server'
+
+EXPORTS
+	; Explicit exports can go here
+	DllCanUnloadNow PRIVATE
+	DllGetClassObject PRIVATE
+	DllRegisterServer PRIVATE
+	DllGetVersion PRIVATE
+	DllUnregisterServer PRIVATE
+
